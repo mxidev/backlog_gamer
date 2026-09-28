@@ -9,7 +9,7 @@
 
 ## Estado general
 
-Proyecto en fase inicial / Sprint 0. EN-001 a EN-004 completados.
+Proyecto en fase inicial / Sprint 0. EN-001 a EN-005 completados.
 
 ## Trabajo actual
 
@@ -25,10 +25,12 @@ Estado: Done (2026-09-28)
 ### EN-004 — Configurar variables de entorno y secretos
 Estado: Done (2026-09-28)
 
+### EN-005 — Definir scripts de calidad y ejecución
+Estado: Done (2026-09-28)
+
 ## Próximo trabajo recomendado
 
-1. Trabajar EN-005: scripts de calidad y ejecución.
-2. Trabajar EN-006: health check y configuración mínima de API.
+1. Trabajar EN-006: health check y configuración mínima de API.
 
 ## Decisiones técnicas confirmadas
 

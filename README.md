@@ -64,6 +64,8 @@ Copia `.env.example` a `.env` y ajusta los valores:
 - `npm start` — servidor de desarrollo
 - `npm run build` — build de producción
 - `npm test` — tests unitarios
+- `npm run format` — formatea código con Prettier
+- `npm run format:check` — verifica formato sin modificar
 
 ### API
 
@@ -72,3 +74,4 @@ Copia `.env.example` a `.env` y ajusta los valores:
 - `npm test` — tests unitarios
 - `npm run test:e2e` — tests end-to-end
 - `npm run lint` — ESLint (modifica archivos con `--fix`)
+- `npm run format` — formatea código con Prettier
