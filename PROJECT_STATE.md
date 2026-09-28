@@ -9,7 +9,7 @@
 
 ## Estado general
 
-Proyecto en fase inicial / Sprint 0. EN-001 completado.
+Proyecto en fase inicial / Sprint 0. EN-001, EN-002 y EN-003 completados.
 
 ## Trabajo actual
 
@@ -17,17 +17,16 @@ Proyecto en fase inicial / Sprint 0. EN-001 completado.
 Estado: Done (2026-09-28)
 
 ### EN-002 — Crear aplicación web Angular
-Estado: Pendiente de validar en el repositorio real.
+Estado: Done (2026-09-28)
 
 ### EN-003 — Crear API base con NestJS
-Estado: Pendiente de validar en el repositorio real.
+Estado: Done (2026-09-28)
 
 ## Próximo trabajo recomendado
 
-1. Validar EN-002 y EN-003.
-2. Trabajar EN-004: variables de entorno y secretos.
-3. Trabajar EN-005: scripts de calidad y ejecución.
-4. Trabajar EN-006: health check y configuración mínima de API.
+1. Trabajar EN-004: variables de entorno y secretos.
+2. Trabajar EN-005: scripts de calidad y ejecución.
+3. Trabajar EN-006: health check y configuración mínima de API.
 
 ## Decisiones técnicas confirmadas
 

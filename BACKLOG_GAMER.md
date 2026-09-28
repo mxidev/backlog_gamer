@@ -72,7 +72,7 @@ Como desarrollador, quiero disponer de la aplicación Angular base para comenzar
 **Epic:** Foundation  
 **Prioridad:** Must  
 **Story Points:** 2  
-**Estado:** Ready  
+**Estado:** Done  
 **Dependencias:** EN-001
 
 ### Descripción
