@@ -21,7 +21,7 @@
 
 ## Definition of Done para HUs
 
-- Flujo Git: `develop` es la base del MVP; crear ramas por HU antes de implementar y dirigir PRs a `develop`. Seguir `docs/GIT_WORKFLOW.md`, incluida la homologación inicial pendiente con `main`. Commits y publicación requieren petición explícita.
+- Flujo Git: `develop` es la base del MVP; crear ramas por HU antes de implementar y dirigir PRs a `develop`. Seguir `docs/GIT_WORKFLOW.md` y consultar el estado de homologación/publicación en `PROJECT_STATE.md`. Commits y publicación requieren petición explícita.
 
 - Criterios de aceptación cumplidos; build y verificaciones relevantes pasan; errores importantes y autorización considerados cuando aplique; sin secretos expuestos y con documentación afectada actualizada.
 - Usa las skills del proyecto en `.agents/skills/` para workflows específicos (`start-session`, `start-hu`, `validate-hu`, `code-review`, `review-status`, `commit`, `close-session`); sus archivos son la fuente del procedimiento detallado.

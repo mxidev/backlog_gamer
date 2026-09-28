@@ -83,7 +83,7 @@ Adapta el plan a la HU real.
 
 Antes de la primera edición de implementación (incluido el estado de la HU), sigue `docs/GIT_WORKFLOW.md`: comprobar árbol de trabajo y referencias, verificar `develop` y crear/reutilizar una rama adecuada para la HU. No implementar sobre `main` o `develop`.
 
-La homologación inicial pendiente entre `main` y `develop` debe resolverse explícitamente antes del MVP. No crear una rama de feature desde una base atrasada para sortear ese pendiente. Registrar la rama elegida en `PROJECT_STATE.md` al iniciar la implementación. El refinamiento por sí solo no cambia ramas ni estado de la HU.
+Comprobar que la homologación inicial entre `main` y `develop` esté resuelta antes del MVP, distinguiendo el estado local del remoto. Si sigue pendiente, no crear una rama de feature desde una base atrasada para sortearla. Registrar la rama elegida en `PROJECT_STATE.md` al iniciar la implementación. El refinamiento por sí solo no cambia ramas ni estado de la HU.
 
 ## Paso 6 — Estado
 
