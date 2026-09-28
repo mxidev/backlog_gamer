@@ -16,6 +16,8 @@ Revisa:
 ```bash
 git status
 git diff
+git diff --staged
+git branch -avv
 git log --oneline -10
 ```
 
@@ -27,13 +29,14 @@ Identifica:
 - trabajo incompleto;
 - blockers;
 - decisiones tomadas.
+- rama de trabajo, base `develop`, commits pendientes de publicar y PR/merge solo si existe evidencia; seguir `docs/GIT_WORKFLOW.md`.
 
 ### 2. Validar HUs
 
 Para cada HU trabajada:
 
 1. Lee sus criterios en `BACKLOG_GAMER.md`.
-2. No marques `Done` si todavía falta un criterio relevante.
+2. Usa `validate-hu` o su evidencia vigente; no marques `Done` si falta un criterio relevante o no se verificó. Cerrar la sesión permite actualizar el estado documental, pero no sustituye la validación.
 3. Usa:
    - `In Progress` si queda implementación pendiente.
    - `Blocked` si existe un impedimento concreto.
@@ -54,6 +57,7 @@ Incluye como máximo:
 
 - fecha de actualización;
 - HU actual;
+- rama de trabajo y pendiente de integración/publicación;
 - trabajo terminado;
 - trabajo pendiente;
 - blockers;
@@ -137,4 +141,4 @@ Próximo paso:
 - acción concreta
 ```
 
-No hagas `git commit` automáticamente. El commit se gestiona mediante la skill `commit`.
+No hagas `git commit` automáticamente. El commit se gestiona mediante la skill `commit`. No cambies de rama ni hagas push, PR o merge al cerrar sesión; registra por separado estado funcional e integración en `develop`.

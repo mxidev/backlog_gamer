@@ -9,7 +9,7 @@
 
 ## Estado general
 
-Proyecto en fase inicial / Sprint 0 completado.
+Sprint 0 registrado como completado en el backlog, con pendientes de revalidación detectados antes de iniciar el MVP.
 
 ## Trabajo actual
 
@@ -33,8 +33,15 @@ Estado: Done (2026-09-28)
 
 ## Próximo trabajo recomendado
 
-1. Trabajar AUTH-001: autenticación.
-2. Trabajar CAT-001: búsqueda de videojuegos en catálogo.
+1. Homologar `develop` con `main` con autorización explícita, siguiendo `docs/GIT_WORKFLOW.md`.
+2. Revalidar pendientes de Sprint 0 antes del MVP: carga de `.env` y lint web (formato no sustituye lint); verificar arranque y health check por HTTP.
+3. Refinar AUTH-001 (autenticación) y CAT-001 (catálogo) antes de implementarlas en ramas desde `develop`.
+
+## Flujo de desarrollo acordado
+
+- Base del MVP: `develop`; ramas por HU y PRs hacia `develop`. Commits y publicación solo por solicitud explícita.
+- Inspección local del 2026-09-28: `main` en `b8323e6`, `develop` en `0368103`; `develop...main` devuelve `0 8`. No se consultó el remoto con fetch en esta revisión.
+- Homologación aún pendiente; no se modificaron referencias Git durante el refinamiento de skills. Los estados `Done` anteriores requieren la revalidación indicada, no constituyen evidencia nueva.
 
 ## Decisiones técnicas confirmadas
 
@@ -57,8 +64,8 @@ Estado: Done (2026-09-28)
 
 ## Bloqueadores actuales
 
-Ninguno registrado.
+Antes del MVP falta homologar la base de desarrollo y verificar los pendientes de Sprint 0.
 
 ## Próximo punto de entrada
 
-Inspeccionar el repositorio actual y confirmar qué partes del Sprint 0 ya están implementadas antes de modificar código.
+Revisar los cambios de skills y `docs/GIT_WORKFLOW.md`; luego acordar la homologación de `develop` con `main` y la revalidación pendiente.

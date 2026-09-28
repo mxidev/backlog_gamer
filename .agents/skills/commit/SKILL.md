@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Esta skill tiene efectos sobre Git y debe ejecutarse solo por petición explícita del usuario.
 
+Si se pide solo sugerir un mensaje, devolver el mensaje sin stage ni commit. Una autorización para un commit concreto no se extiende automáticamente a HUs posteriores.
+
 ## Regla principal
 
 Nunca hagas push.
@@ -22,6 +24,8 @@ Ejecuta:
 git status
 git diff
 git diff --staged
+git log --oneline -10
+git branch -avv
 ```
 
 Identifica:
@@ -32,6 +36,8 @@ Identifica:
 - cambios no relacionados;
 - documentación de sesión;
 - artefactos generados que no deberían versionarse.
+
+Seguir `docs/GIT_WORKFLOW.md`: confirmar rama de trabajo basada en `develop`. Si la rama actual es `main` o `develop`, detener el commit y proponer una rama adecuada; una excepción requiere autorización explícita. No mover cambios ni homologar como efecto secundario del commit.
 
 ## Paso 2 — Seguridad
 
@@ -78,6 +84,8 @@ build
 No inventes comandos: utiliza los definidos en el repositorio.
 
 Si un check falla, no ocultes el fallo.
+
+Registrar comandos, resultados y checks no ejecutados. Reutilizar resultados previos solo si cubren el mismo código/configuración; un script existente no equivale a un check aprobado.
 
 ## Paso 5 — Mensaje
 
@@ -129,9 +137,12 @@ Ejecuta el commit solo después de verificar el contenido staged:
 
 ```bash
 git diff --staged
+git diff --staged --check
 ```
 
 Después:
+
+Comprobar que el stage contiene solo los archivos acordados. En PowerShell 5.1 no usar `&&` ni ejecutar el commit después de un `git add` fallido; seguir `docs/GIT_WORKFLOW.md`.
 
 ```bash
 git commit -m "<mensaje>"
@@ -146,6 +157,7 @@ Informa:
 - archivos incluidos;
 - checks ejecutados;
 - si quedaron cambios fuera del commit.
+- rama del commit y resultado de `git status --short --branch` después de crearlo.
 
 ## Prohibido
 

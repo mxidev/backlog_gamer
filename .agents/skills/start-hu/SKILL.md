@@ -8,6 +8,8 @@ argument-hint: "[HU-ID]"
 
 HU objetivo: `$ARGUMENTS`
 
+Si la skill se carga sin sustitución de `$ARGUMENTS`, toma el ID del pedido del usuario. Si falta o hay ambigüedad, acláralo antes de modificar el backlog.
+
 ## Paso 1 — Resolver la HU
 
 Busca `$ARGUMENTS` en `BACKLOG_GAMER.md`.
@@ -34,9 +36,6 @@ Qué valor entrega.
 
 ### Alcance
 Qué debe quedar funcionando.
-
-### Fuera de alcance
-Qué no se implementará todavía.
 
 ### Dependencias
 Qué debe existir antes.
@@ -80,6 +79,12 @@ Ejemplo:
 
 Adapta el plan a la HU real.
 
+## Paso 5 bis — Preparar rama
+
+Antes de la primera edición de implementación (incluido el estado de la HU), sigue `docs/GIT_WORKFLOW.md`: comprobar árbol de trabajo y referencias, verificar `develop` y crear/reutilizar una rama adecuada para la HU. No implementar sobre `main` o `develop`.
+
+La homologación inicial pendiente entre `main` y `develop` debe resolverse explícitamente antes del MVP. No crear una rama de feature desde una base atrasada para sortear ese pendiente. Registrar la rama elegida en `PROJECT_STATE.md` al iniciar la implementación. El refinamiento por sí solo no cambia ramas ni estado de la HU.
+
 ## Paso 6 — Estado
 
 Cuando comience implementación real:
@@ -106,3 +111,5 @@ Si el usuario pide implementación completa, procede con ella.
 - No introducir arquitectura futura.
 - No modificar criterios de aceptación silenciosamente.
 - No marcar `Done` desde esta skill.
+- Al terminar implementación, usar `validate-hu` y reportar evidencia antes de proponer `Done`. No confundir build, arranque, lint, formato y pruebas HTTP.
+- No ejecutar commits, push, PR ni merges de entrega por una petición genérica de continuar; aplicar las autorizaciones de `docs/GIT_WORKFLOW.md`.
