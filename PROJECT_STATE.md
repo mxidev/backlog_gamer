@@ -5,16 +5,16 @@
 
 ## Última actualización
 
-2026-08-20
+2026-09-28
 
 ## Estado general
 
-Proyecto en fase inicial / Sprint 0.
+Proyecto en fase inicial / Sprint 0. EN-001 completado.
 
 ## Trabajo actual
 
 ### EN-001 — Inicializar repositorio y estructura base
-Estado: Pendiente de validar en el repositorio real.
+Estado: Done (2026-09-28)
 
 ### EN-002 — Crear aplicación web Angular
 Estado: Pendiente de validar en el repositorio real.
@@ -24,7 +24,7 @@ Estado: Pendiente de validar en el repositorio real.
 
 ## Próximo trabajo recomendado
 
-1. Confirmar que EN-001, EN-002 y EN-003 estén realmente completos.
+1. Validar EN-002 y EN-003.
 2. Trabajar EN-004: variables de entorno y secretos.
 3. Trabajar EN-005: scripts de calidad y ejecución.
 4. Trabajar EN-006: health check y configuración mínima de API.

@@ -29,7 +29,7 @@
 **Epic:** Foundation  
 **Prioridad:** Must  
 **Story Points:** 2  
-**Estado:** Ready  
+**Estado:** Done  
 **Dependencias:** Ninguna
 
 ### Descripción
