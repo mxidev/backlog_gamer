@@ -9,7 +9,7 @@
 
 ## Estado general
 
-Proyecto en fase inicial / Sprint 0. EN-001, EN-002 y EN-003 completados.
+Proyecto en fase inicial / Sprint 0. EN-001 a EN-004 completados.
 
 ## Trabajo actual
 
@@ -22,11 +22,13 @@ Estado: Done (2026-09-28)
 ### EN-003 — Crear API base con NestJS
 Estado: Done (2026-09-28)
 
+### EN-004 — Configurar variables de entorno y secretos
+Estado: Done (2026-09-28)
+
 ## Próximo trabajo recomendado
 
-1. Trabajar EN-004: variables de entorno y secretos.
-2. Trabajar EN-005: scripts de calidad y ejecución.
-3. Trabajar EN-006: health check y configuración mínima de API.
+1. Trabajar EN-005: scripts de calidad y ejecución.
+2. Trabajar EN-006: health check y configuración mínima de API.
 
 ## Decisiones técnicas confirmadas
 

@@ -41,10 +41,21 @@ Abre http://localhost:4200
 ```bash
 cd apps/api
 npm install
+cp .env.example .env
 npm run start:dev
 ```
 
 La API escucha en http://localhost:3000
+
+## Variables de entorno
+
+### API
+
+Copia `.env.example` a `.env` y ajusta los valores:
+
+| Variable | Descripción | Requerida |
+|----------|-------------|-----------|
+| `PORT` | Puerto del servidor | Sí |
 
 ## Scripts
 
