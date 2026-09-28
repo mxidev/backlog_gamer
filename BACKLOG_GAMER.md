@@ -50,7 +50,7 @@ Como desarrollador, quiero una estructura de repositorio clara para separar fron
 **Epic:** Foundation  
 **Prioridad:** Must  
 **Story Points:** 2  
-**Estado:** Ready  
+**Estado:** Done  
 **Dependencias:** EN-001
 
 ### Descripción
