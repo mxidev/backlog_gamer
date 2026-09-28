@@ -9,7 +9,7 @@
 
 ## Estado general
 
-Proyecto en fase inicial / Sprint 0. EN-001 a EN-005 completados.
+Proyecto en fase inicial / Sprint 0 completado.
 
 ## Trabajo actual
 
@@ -28,9 +28,13 @@ Estado: Done (2026-09-28)
 ### EN-005 — Definir scripts de calidad y ejecución
 Estado: Done (2026-09-28)
 
+### EN-006 — Exponer health check de la API
+Estado: Done (2026-09-28)
+
 ## Próximo trabajo recomendado
 
-1. Trabajar EN-006: health check y configuración mínima de API.
+1. Trabajar AUTH-001: autenticación.
+2. Trabajar CAT-001: búsqueda de videojuegos en catálogo.
 
 ## Decisiones técnicas confirmadas
 

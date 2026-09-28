@@ -127,7 +127,7 @@ Como desarrollador, quiero una API Node.js estructurada para implementar la lóg
 **Epic:** Foundation  
 **Prioridad:** Must  
 **Story Points:** 1  
-**Estado:** Backlog  
+**Estado:** Done  
 **Dependencias:** EN-003
 
 ### Criterios de aceptación
