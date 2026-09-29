@@ -9,7 +9,7 @@
 
 ## Estado general
 
-AUTH-001 completada. Rama `feat/auth-001-autenticacion` lista para PR hacia `develop`.
+MVP en progreso. AUTH-001 completada y mergeada en develop.
 
 ## Trabajo actual
 
@@ -31,11 +31,13 @@ Estado: Done (2026-09-28)
 ### EN-006 — Exponer health check de la API
 Estado: Done (2026-09-28)
 
+### AUTH-001 — Autenticarme en la aplicación
+Estado: Done (2026-09-29)
+
 ## Próximo trabajo recomendado
 
-1. Crear PR de AUTH-001 hacia `develop`.
-2. Implementar CAT-001 (búsqueda de catálogo).
-3. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
+1. Implementar CAT-001 (búsqueda de catálogo).
+2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
 
@@ -68,5 +70,4 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-1. Merge de PR #1 y PR #2 hacia `develop`.
-2. Refinar AUTH-001 (autenticación) y CAT-001 (catálogo) antes de implementarlas.
+Implementar CAT-001 desde la rama `feat/cat-001-catalogo-videojuegos` (ya creada, vacía).
