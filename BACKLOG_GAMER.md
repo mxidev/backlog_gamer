@@ -146,7 +146,7 @@ Como desarrollador, quiero una API Node.js estructurada para implementar la lóg
 **Epic:** Auth  
 **Prioridad:** Must  
 **Story Points:** 5  
-**Estado:** Backlog  
+**Estado:** Done  
 **Dependencias:** EN-004
 
 ### Historia

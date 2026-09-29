@@ -5,11 +5,11 @@
 
 ## Última actualización
 
-2026-09-28
+2026-09-29
 
 ## Estado general
 
-Sprint 0 completado. Flujo Git establecido. PRs #1 y #2 abiertos hacia `develop`.
+AUTH-001 completada. Rama `feat/auth-001-autenticacion` lista para PR hacia `develop`.
 
 ## Trabajo actual
 
@@ -33,8 +33,9 @@ Estado: Done (2026-09-28)
 
 ## Próximo trabajo recomendado
 
-1. Refinar AUTH-001 (autenticación) y CAT-001 (catálogo) antes de implementarlas en ramas desde `develop`.
-2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
+1. Crear PR de AUTH-001 hacia `develop`.
+2. Implementar CAT-001 (búsqueda de catálogo).
+3. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
 
