@@ -9,7 +9,7 @@
 
 ## Estado general
 
-Sprint 0 registrado como completado en el backlog, con pendientes de revalidación detectados antes de iniciar el MVP.
+Sprint 0 completado. Flujo Git establecido. PRs #1 y #2 abiertos hacia `develop`.
 
 ## Trabajo actual
 
@@ -38,11 +38,9 @@ Estado: Done (2026-09-28)
 
 ## Flujo de desarrollo acordado
 
-- Base del MVP: `develop`; ramas por HU y PRs hacia `develop`. Commits y publicación solo por solicitud explícita.
-- Homologación local realizada el 2026-09-28: `git merge --ff-only main` avanzó `develop` desde `0368103` hasta `b8323e6`. `main` y `develop` apuntan al mismo commit; `develop...main` devuelve `0 0` y no hay diferencias entre sus árboles.
-- Refinamiento guardado en `299c8df` sobre `chore/refine-skills-workflow`, creada desde el tip de `main` antes del fast-forward (ahora también base de `develop`). Esta es la rama de trabajo para retomar la sesión con las skills actualizadas; su integración en `develop` está pendiente.
-- `git fetch origin` falló con `Permission denied (publickey)`. La referencia local `origin/develop` sigue en `0368103`; `develop` está 8 commits por delante de esa referencia, pero el estado actual en GitHub no pudo verificarse. No se realizó push ni PR.
-- Los estados `Done` anteriores requieren la revalidación indicada, no constituyen evidencia nueva.
+- Base del MVP: `develop`; ramas por HU y PRs hacia `develop`.
+- Commits y publicación solo por solicitud explícita.
+- Ver `docs/GIT_WORKFLOW.md` para el procedimiento completo.
 
 ## Decisiones técnicas confirmadas
 
@@ -69,4 +67,5 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-Reiniciar OpenCode en `chore/refine-skills-workflow`, resolver el acceso SSH y verificar el remoto. Después acordar publicación/PR del refinamiento y retomar la revalidación de Sprint 0.
+1. Merge de PR #1 y PR #2 hacia `develop`.
+2. Refinar AUTH-001 (autenticación) y CAT-001 (catálogo) antes de implementarlas.
