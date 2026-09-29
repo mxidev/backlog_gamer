@@ -33,9 +33,8 @@ Estado: Done (2026-09-28)
 
 ## Próximo trabajo recomendado
 
-1. Resolver acceso SSH a GitHub y repetir `git fetch origin`; comprobar el remoto antes de solicitar publicación de `develop` y de `chore/refine-skills-workflow`, e integrar el refinamiento por PR hacia `develop`.
-2. Revalidar pendientes de Sprint 0 antes del MVP: carga de `.env` y lint web (formato no sustituye lint); verificar arranque y health check por HTTP.
-3. Refinar AUTH-001 (autenticación) y CAT-001 (catálogo) antes de implementarlas en ramas desde `develop`.
+1. Refinar AUTH-001 (autenticación) y CAT-001 (catálogo) antes de implementarlas en ramas desde `develop`.
+2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
 
@@ -66,7 +65,7 @@ Estado: Done (2026-09-28)
 
 ## Bloqueadores actuales
 
-Acceso SSH al remoto bloqueado; falta verificar/publicar la homologación e integrar las skills en `develop`. También falta revalidar los pendientes de Sprint 0.
+Ninguno registrado.
 
 ## Próximo punto de entrada
 
