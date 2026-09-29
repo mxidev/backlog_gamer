@@ -9,7 +9,7 @@
 
 ## Estado general
 
-Proyecto en fase inicial / Sprint 0 completado.
+Sprint 0 registrado como completado en el backlog, con pendientes de revalidación detectados antes de iniciar el MVP.
 
 ## Trabajo actual
 
@@ -33,8 +33,17 @@ Estado: Done (2026-09-28)
 
 ## Próximo trabajo recomendado
 
-1. Trabajar AUTH-001: autenticación.
-2. Trabajar CAT-001: búsqueda de videojuegos en catálogo.
+1. Resolver acceso SSH a GitHub y repetir `git fetch origin`; comprobar el remoto antes de solicitar publicación de `develop` y de `chore/refine-skills-workflow`, e integrar el refinamiento por PR hacia `develop`.
+2. Revalidar pendientes de Sprint 0 antes del MVP: carga de `.env` y lint web (formato no sustituye lint); verificar arranque y health check por HTTP.
+3. Refinar AUTH-001 (autenticación) y CAT-001 (catálogo) antes de implementarlas en ramas desde `develop`.
+
+## Flujo de desarrollo acordado
+
+- Base del MVP: `develop`; ramas por HU y PRs hacia `develop`. Commits y publicación solo por solicitud explícita.
+- Homologación local realizada el 2026-09-28: `git merge --ff-only main` avanzó `develop` desde `0368103` hasta `b8323e6`. `main` y `develop` apuntan al mismo commit; `develop...main` devuelve `0 0` y no hay diferencias entre sus árboles.
+- Refinamiento guardado en `299c8df` sobre `chore/refine-skills-workflow`, creada desde el tip de `main` antes del fast-forward (ahora también base de `develop`). Esta es la rama de trabajo para retomar la sesión con las skills actualizadas; su integración en `develop` está pendiente.
+- `git fetch origin` falló con `Permission denied (publickey)`. La referencia local `origin/develop` sigue en `0368103`; `develop` está 8 commits por delante de esa referencia, pero el estado actual en GitHub no pudo verificarse. No se realizó push ni PR.
+- Los estados `Done` anteriores requieren la revalidación indicada, no constituyen evidencia nueva.
 
 ## Decisiones técnicas confirmadas
 
@@ -57,8 +66,8 @@ Estado: Done (2026-09-28)
 
 ## Bloqueadores actuales
 
-Ninguno registrado.
+Acceso SSH al remoto bloqueado; falta verificar/publicar la homologación e integrar las skills en `develop`. También falta revalidar los pendientes de Sprint 0.
 
 ## Próximo punto de entrada
 
-Inspeccionar el repositorio actual y confirmar qué partes del Sprint 0 ya están implementadas antes de modificar código.
+Reiniciar OpenCode en `chore/refine-skills-workflow`, resolver el acceso SSH y verificar el remoto. Después acordar publicación/PR del refinamiento y retomar la revalidación de Sprint 0.
