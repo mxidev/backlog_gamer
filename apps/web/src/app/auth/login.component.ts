@@ -1,8 +1,8 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   toggleMode(): void {
@@ -46,15 +46,19 @@ export class LoginComponent {
       : this.authService.register(this.email, this.password);
 
     operation
-      .pipe(finalize(() => this.ngZone.run(() => (this.loading = false))))
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/home']);
-        },
-        error: (err) => {
+      .pipe(
+        catchError((err) => {
           this.errorMessage =
             err.error?.message || 'Error al conectar con el servidor';
-        },
+          this.loading = false;
+          this.cdr.detectChanges();
+          return of(null);
+        }),
+      )
+      .subscribe((result) => {
+        if (result) {
+          this.router.navigate(['/home']);
+        }
       });
   }
 }
