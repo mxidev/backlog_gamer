@@ -5,11 +5,11 @@
 
 ## Última actualización
 
-2026-09-28
+2026-09-30
 
 ## Estado general
 
-Proyecto en fase inicial / Sprint 0 completado.
+MVP en progreso. AUTH-001 y CAT-001 completadas.
 
 ## Trabajo actual
 
@@ -31,10 +31,25 @@ Estado: Done (2026-09-28)
 ### EN-006 — Exponer health check de la API
 Estado: Done (2026-09-28)
 
+### AUTH-001 — Autenticarme en la aplicación
+Estado: Done (2026-09-29)
+
+### CAT-001 — Buscar videojuegos en un catálogo
+Estado: Done (2026-09-30)
+
+### LIB-001 — Agregar un videojuego a mi biblioteca
+Estado: Done (2026-09-30)
+
 ## Próximo trabajo recomendado
 
-1. Trabajar AUTH-001: autenticación.
-2. Trabajar CAT-001: búsqueda de videojuegos en catálogo.
+1. Implementar LIB-002 (ver mi biblioteca de videojuegos).
+2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
+
+## Flujo de desarrollo acordado
+
+- Base del MVP: `develop`; ramas por HU y PRs hacia `develop`.
+- Commits y publicación solo por solicitud explícita.
+- Ver `docs/GIT_WORKFLOW.md` para el procedimiento completo.
 
 ## Decisiones técnicas confirmadas
 
@@ -50,10 +65,15 @@ Estado: Done (2026-09-28)
 
 - ORM / acceso a datos.
 - Uso definitivo de Supabase.
-- Proveedor de autenticación.
-- API externa de catálogo de videojuegos.
+- Proveedor de autenticación (actualmente JWT custom).
 - Librería UI.
 - Estrategia de despliegue.
+
+## Decisiones técnicas confirmadas (MVP)
+
+- RAWG API para catálogo de videojuegos.
+- JWT con access token para autenticación.
+- Storage in-memory para usuarios (sin DB aún).
 
 ## Bloqueadores actuales
 
@@ -61,4 +81,4 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-Inspeccionar el repositorio actual y confirmar qué partes del Sprint 0 ya están implementadas antes de modificar código.
+Implementar CAT-002 (ver información básica de un videojuego) o LIB-001 (agregar videojuego a biblioteca).

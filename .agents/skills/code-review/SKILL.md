@@ -8,6 +8,8 @@ argument-hint: "[HU-ID|path|scope]"
 
 Scope solicitado: `$ARGUMENTS`
 
+Si `$ARGUMENTS` no fue sustituido, usar el alcance indicado en la conversación; aclararlo si es ambiguo.
+
 Haz una revisión orientada a defectos y cumplimiento de requerimientos, no a preferencias estéticas.
 
 ## Contexto mínimo
@@ -25,11 +27,14 @@ Si hay cambios locales:
 ```bash
 git status
 git diff
+git diff --staged
 ```
 
 Si el usuario especifica un commit/rango, revisa ese rango.
 
 Si especifica una HU, identifica los archivos relacionados mediante Git y búsqueda en el repositorio.
+
+Para una rama de feature, seguir `docs/GIT_WORKFLOW.md`: comprobar la base y revisar `git log --oneline develop..HEAD` y `git diff develop...HEAD`, además de cambios locales y archivos nuevos. Revisar todos los commits de la feature, no solo el último. Una review no cambia ramas ni hace merges.
 
 No revises todo el repositorio sin necesidad.
 
@@ -74,6 +79,10 @@ Considera cuando aplique:
 - separación controller/service;
 - acceso inseguro a datos;
 - tests de reglas de negocio.
+- carga efectiva de `.env` y validación antes del arranque, no solo existencia de un archivo de ejemplo;
+- endpoints probados por HTTP, incluidos guards y registro de módulos; una llamada directa al controller no verifica routing ni status codes.
+
+Para checks y versiones, aplicar el estándar de evidencia de `validate-hu`: Prettier no sustituye lint, build no sustituye arranque y rangos del manifiesto no prueban la versión instalada.
 
 ## Formato de findings
 

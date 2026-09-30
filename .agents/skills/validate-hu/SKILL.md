@@ -8,6 +8,8 @@ argument-hint: '[HU-ID]'
 
 HU objetivo: `$ARGUMENTS`
 
+Si `$ARGUMENTS` no fue sustituido, obtener el ID de la petición del usuario; no buscar el texto literal como ID.
+
 El propósito de esta skill es determinar si una HU puede considerarse realmente terminada.
 
 No debe asumir que una HU está lista solo porque existe código implementado o porque el desarrollador considera que "ya funciona".
@@ -29,7 +31,7 @@ Busca `$ARGUMENTS` en:
 
 ```text
 BACKLOG_GAMER.md
-````
+```
 
 Obtén:
 
@@ -81,6 +83,8 @@ git log --oneline -10
 Identifica los archivos relacionados con la HU.
 
 Inspecciona únicamente el código necesario para evaluar sus criterios.
+
+Seguir `docs/GIT_WORKFLOW.md`: identificar rama, base y cambios de toda la HU contra `develop`, además del diff local. No homologar, cambiar ramas ni integrar durante la validación. Informar integración por separado del veredicto funcional.
 
 ---
 
@@ -150,6 +154,16 @@ No utilizarlo para evitar implementar un criterio.
 
 Cada resultado debe basarse en evidencia concreta.
 
+### Evidencia mínima según el criterio
+
+- **Build:** comando ejecutado y salida/código de éxito. No demuestra por sí solo arranque del servidor ni comportamiento en navegador.
+- **Arranque:** iniciar con la configuración documentada y comprobar disponibilidad/respuesta. Detener únicamente el proceso iniciado para la verificación. Si no se ejecutó, usar `NOT_VERIFIED`.
+- **Endpoint HTTP:** prueba e2e o petición real que compruebe ruta, status, cuerpo y acceso con/sin autenticación según el criterio. Invocar un controller directamente no prueba registro de rutas ni guards.
+- **Lint/tests:** registrar comando y resultado. Que exista el script o la configuración no significa que pase; Prettier comprueba formato y no sustituye lint.
+- **Versiones:** comprobar lockfile y versión instalada cuando el criterio fija una versión. Un rango como `^21.2.0` no demuestra `21.2.6`; informar discrepancias sin cambiar el criterio automáticamente.
+- **Entorno:** verificar carga efectiva de `.env`, precedencia de variables y rechazo de entradas ausentes/inválidas conforme a la documentación. `.env.example` por sí solo no carga variables. Verificar archivos ignorados con `git check-ignore` y posibles archivos sensibles ya tracked sin mostrar sus valores.
+- Reutilizar verificaciones previas solo si el código y configuración relevantes siguen iguales, indicando su alcance. No declarar ausencia de secretos o errores de consola sin haberlo comprobado; usar `NOT_VERIFIED` o `NOT_APPLICABLE` con motivo.
+
 La evidencia puede ser:
 
 * implementación en código;
@@ -175,8 +189,8 @@ PASS
 
 Evidencia:
 - apps/api/src/health/health.controller.ts
-- apps/api/src/health/health.controller.spec.ts
-- test ejecutado correctamente
+- prueba e2e ejecutada contra GET /api/v1/health sin credenciales
+- respuesta HTTP 200 y cuerpo con status reconocible
 ```
 
 Evita argumentos vagos como:
@@ -231,6 +245,8 @@ Usa `npm run lint` con precaución porque puede modificar archivos.
 Antes de ejecutarlo, recuerda que ESLint está configurado con `--fix`.
 
 No lo ejecutes como una comprobación de solo lectura sin considerar ese efecto.
+
+Para comprobar lint sin autofix, si la configuración actual sigue siendo ESLint, puede ejecutarse desde `apps/api`: `npx --no-install eslint "{src,apps,libs,test}/**/*.ts"`. Registrar el resultado real. Si no se puede verificar, no asignar `PASS`.
 
 ---
 
@@ -416,6 +432,8 @@ Por defecto:
 * NO cambies automáticamente la HU a `Done`;
 * entrega primero el resultado de validación.
 
+Una petición genérica de continuar o corregir un archivo no autoriza cerrar otras HUs ni crear commits. Si se autoriza actualizar estados, mantener coherentes `BACKLOG_GAMER.md` y `PROJECT_STATE.md`, con evidencia y pendientes; no convertir una validación local en una afirmación de merge/publicación.
+
 Si el usuario pidió explícitamente validar y actualizar estado:
 
 ### Si READY_FOR_DONE
@@ -552,5 +570,3 @@ In Progress
 * No agregar mejoras fuera de alcance como condición para cerrar la HU.
 * No hacer commits automáticamente.
 * No modificar código salvo que el usuario también solicite corregir los problemas encontrados.
-
-```

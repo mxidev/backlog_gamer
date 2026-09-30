@@ -146,7 +146,7 @@ Como desarrollador, quiero una API Node.js estructurada para implementar la lóg
 **Epic:** Auth  
 **Prioridad:** Must  
 **Story Points:** 5  
-**Estado:** Backlog  
+**Estado:** Done  
 **Dependencias:** EN-004
 
 ### Historia
@@ -166,7 +166,7 @@ Como jugador, quiero iniciar sesión de forma segura para acceder a mi bibliotec
 **Epic:** Game Catalog  
 **Prioridad:** Must  
 **Story Points:** 5  
-**Estado:** Backlog  
+**Estado:** Done  
 **Dependencias:** EN-002, EN-003
 
 ### Historia
@@ -206,7 +206,7 @@ Como jugador, quiero revisar información básica de un videojuego antes de agre
 **Epic:** Library  
 **Prioridad:** Must  
 **Story Points:** 5  
-**Estado:** Backlog  
+**Estado:** Done  
 **Dependencias:** AUTH-001, CAT-001
 
 ### Historia
