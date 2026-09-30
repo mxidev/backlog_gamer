@@ -5,11 +5,11 @@
 
 ## Última actualización
 
-2026-09-29
+2026-09-30
 
 ## Estado general
 
-MVP en progreso. AUTH-001 completada y mergeada en develop.
+MVP en progreso. AUTH-001 y CAT-001 completadas.
 
 ## Trabajo actual
 
@@ -34,9 +34,12 @@ Estado: Done (2026-09-28)
 ### AUTH-001 — Autenticarme en la aplicación
 Estado: Done (2026-09-29)
 
+### CAT-001 — Buscar videojuegos en un catálogo
+Estado: Done (2026-09-30)
+
 ## Próximo trabajo recomendado
 
-1. Implementar CAT-001 (búsqueda de catálogo).
+1. Implementar CAT-002 (ver información básica de un videojuego).
 2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
@@ -59,10 +62,15 @@ Estado: Done (2026-09-29)
 
 - ORM / acceso a datos.
 - Uso definitivo de Supabase.
-- Proveedor de autenticación.
-- API externa de catálogo de videojuegos.
+- Proveedor de autenticación (actualmente JWT custom).
 - Librería UI.
 - Estrategia de despliegue.
+
+## Decisiones técnicas confirmadas (MVP)
+
+- RAWG API para catálogo de videojuegos.
+- JWT con access token para autenticación.
+- Storage in-memory para usuarios (sin DB aún).
 
 ## Bloqueadores actuales
 
@@ -70,4 +78,4 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-Implementar CAT-001 desde la rama `feat/cat-001-catalogo-videojuegos` (ya creada, vacía).
+Implementar CAT-002 (ver información básica de un videojuego) o LIB-001 (agregar videojuego a biblioteca).

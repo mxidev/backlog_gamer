@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
     <div class="home-container">
       <h1>Backlog Gamer</h1>
       <p>Bienvenido a tu biblioteca de videojuegos</p>
-      <button (click)="logout()">Cerrar sesión</button>
+      <div class="actions">
+        <button (click)="goToSearch()" class="btn-primary">Buscar videojuegos</button>
+        <button (click)="logout()" class="btn-secondary">Cerrar sesión</button>
+      </div>
     </div>
   `,
   styles: [`
@@ -30,14 +33,33 @@ import { Router } from '@angular/router';
         margin-bottom: 2rem;
       }
 
+      .actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
       button {
         padding: 0.75rem 1.5rem;
         border: none;
         border-radius: 4px;
-        background: #e74c3c;
-        color: #eee;
         font-size: 1rem;
         cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .btn-primary {
+        background: #0f3460;
+        color: #eee;
+
+        &:hover {
+          background: #1a4a8a;
+        }
+      }
+
+      .btn-secondary {
+        background: #e74c3c;
+        color: #eee;
 
         &:hover {
           background: #c0392b;
@@ -51,6 +73,10 @@ export class HomeComponent {
     private authService: AuthService,
     private router: Router,
   ) {}
+
+  goToSearch(): void {
+    this.router.navigate(['/search']);
+  }
 
   logout(): void {
     this.authService.logout();

@@ -166,7 +166,7 @@ Como jugador, quiero iniciar sesión de forma segura para acceder a mi bibliotec
 **Epic:** Game Catalog  
 **Prioridad:** Must  
 **Story Points:** 5  
-**Estado:** Backlog  
+**Estado:** Done  
 **Dependencias:** EN-002, EN-003
 
 ### Historia
