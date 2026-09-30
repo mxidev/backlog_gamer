@@ -54,4 +54,8 @@ export class LibraryService {
   updatePersonalInfo(gameId: string, info: UpdatePersonalInfoRequest): Observable<LibraryGame> {
     return this.http.patch<LibraryGame>(`${this.apiUrl}/games/${gameId}/personal-info`, info);
   }
+
+  deleteGame(gameId: string): Observable<{ success: boolean }> {
+    return this.http.delete<{ success: boolean }>(`${this.apiUrl}/games/${gameId}`);
+  }
 }

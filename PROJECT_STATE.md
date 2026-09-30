@@ -49,9 +49,12 @@ Estado: Done (2026-09-30)
 ### LIB-004 — Registrar información personal de un videojuego
 Estado: Done (2026-09-30)
 
+### LIB-005 — Eliminar un videojuego de mi biblioteca
+Estado: Done (2026-09-30)
+
 ## Próximo trabajo recomendado
 
-1. Implementar LIB-005 (eliminar un videojuego de mi biblioteca).
+1. Implementar LIB-006 (buscar, filtrar y ordenar mi biblioteca).
 2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
@@ -90,4 +93,4 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-Implementar LIB-005 (eliminar un videojuego de mi biblioteca) o LIB-006 (buscar, filtrar y ordenar mi biblioteca).
+Implementar LIB-006 (buscar, filtrar y ordenar mi biblioteca) o DASH-001 (ver un resumen de mi backlog).

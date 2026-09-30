@@ -260,4 +260,95 @@ describe('LibraryController (e2e)', () => {
         .expect(403);
     });
   });
+
+  describe('DELETE /api/v1/library/games/:id', () => {
+    let gameId: string;
+    let otherUserGameId: string;
+    let otherAuthToken: string;
+
+    beforeAll(async () => {
+      // Register another user
+      const otherUserResponse = await request(app.getHttpServer())
+        .post('/api/v1/auth/register')
+        .send({ email: 'other3@test.com', password: 'password123' });
+
+      otherAuthToken = otherUserResponse.body.access_token;
+
+      // Add a game for the other user
+      const otherGameResponse = await request(app.getHttpServer())
+        .post('/api/v1/library/games')
+        .set('Authorization', `Bearer ${otherAuthToken}`)
+        .send({
+          externalGameId: 666,
+          title: 'Other User Game',
+        });
+      otherUserGameId = otherGameResponse.body.id;
+    });
+
+    beforeEach(async () => {
+      // Add a game to delete
+      const response = await request(app.getHttpServer())
+        .post('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          externalGameId: 777,
+          title: 'Delete Test Game',
+        });
+      gameId = response.body.id;
+    });
+
+    it('should delete a game', async () => {
+      // Verify game exists
+      await request(app.getHttpServer())
+        .get('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200)
+        .expect((res) => {
+          const game = res.body.find((g) => g.id === gameId);
+          expect(game).toBeDefined();
+        });
+
+      // Delete the game
+      await request(app.getHttpServer())
+        .delete(`/api/v1/library/games/${gameId}`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.success).toBe(true);
+        });
+
+      // Verify game is deleted
+      await request(app.getHttpServer())
+        .get('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200)
+        .expect((res) => {
+          const game = res.body.find((g) => g.id === gameId);
+          expect(game).toBeUndefined();
+        });
+    });
+
+    it('should reject non-existent game', () => {
+      return request(app.getHttpServer())
+        .delete('/api/v1/library/games/non-existent-id')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(404);
+    });
+
+    it('should reject unauthenticated request', () => {
+      return request(app.getHttpServer())
+        .delete(`/api/v1/library/games/${gameId}`)
+        .expect(401);
+    });
+
+    it('should reject other user trying to delete', () => {
+      return request(app.getHttpServer())
+        .delete(`/api/v1/library/games/${otherUserGameId}`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(403)
+        .expect((res) => {
+          expect(res.body.message).toContain('No puedes eliminar juegos de otros usuarios');
+        });
+    });
+  });
 });

@@ -278,7 +278,7 @@ Como jugador, quiero agregar un videojuego del catálogo a mi biblioteca para co
 **Epic:** Library  
 **Prioridad:** Should  
 **Story Points:** 2  
-**Estado:** Backlog  
+**Estado:** Done  
 **Dependencias:** LIB-002
 
 ### Criterios de aceptación

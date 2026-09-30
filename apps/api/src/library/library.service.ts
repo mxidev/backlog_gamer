@@ -87,4 +87,20 @@ export class LibraryService {
 
     return game;
   }
+
+  async deleteGame(userId: string, gameId: string): Promise<void> {
+    const gameIndex = this.library.findIndex((g) => g.id === gameId);
+
+    if (gameIndex === -1) {
+      throw new NotFoundException('Juego no encontrado');
+    }
+
+    const game = this.library[gameIndex];
+
+    if (game.userId !== userId) {
+      throw new ForbiddenException('No puedes eliminar juegos de otros usuarios');
+    }
+
+    this.library.splice(gameIndex, 1);
+  }
 }
