@@ -37,9 +37,12 @@ Estado: Done (2026-09-29)
 ### CAT-001 — Buscar videojuegos en un catálogo
 Estado: Done (2026-09-30)
 
+### LIB-001 — Agregar un videojuego a mi biblioteca
+Estado: Done (2026-09-30)
+
 ## Próximo trabajo recomendado
 
-1. Implementar CAT-002 (ver información básica de un videojuego).
+1. Implementar LIB-002 (ver mi biblioteca de videojuegos).
 2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
