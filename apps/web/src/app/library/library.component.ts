@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LibraryService, LibraryGame } from './library.service';
+import { LibraryService, LibraryGame, UpdatePersonalInfoRequest } from './library.service';
 
 @Component({
   selector: 'app-library',
@@ -51,6 +51,48 @@ import { LibraryService, LibraryGame } from './library.service';
                   <option value="completed">Completado</option>
                   <option value="abandoned">Abandonado</option>
                 </select>
+                <button class="edit-btn" (click)="toggleEditForm(game)">
+                  {{ editingGame === game.id ? 'Cancelar' : 'Editar info' }}
+                </button>
+                @if (editingGame === game.id) {
+                  <div class="edit-form">
+                    <input
+                      type="text"
+                      [(ngModel)]="editForm.platform"
+                      placeholder="Plataforma (ej: PC, PS5)"
+                      class="form-input"
+                    />
+                    <input
+                      type="date"
+                      [(ngModel)]="editForm.startDate"
+                      placeholder="Fecha inicio"
+                      class="form-input"
+                    />
+                    <input
+                      type="date"
+                      [(ngModel)]="editForm.endDate"
+                      placeholder="Fecha término"
+                      class="form-input"
+                    />
+                    <textarea
+                      [(ngModel)]="editForm.personalNote"
+                      placeholder="Nota personal"
+                      class="form-textarea"
+                      rows="3"
+                    ></textarea>
+                    <input
+                      type="number"
+                      [(ngModel)]="editForm.rating"
+                      placeholder="Valoración (1-10)"
+                      min="1"
+                      max="10"
+                      class="form-input"
+                    />
+                    <button class="save-btn" (click)="savePersonalInfo(game)">
+                      Guardar
+                    </button>
+                  </div>
+                }
               </div>
             </div>
           }
@@ -162,6 +204,70 @@ import { LibraryService, LibraryGame } from './library.service';
       cursor: not-allowed;
     }
 
+    .edit-btn {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      border: 1px solid #0f3460;
+      border-radius: 4px;
+      background: transparent;
+      color: #0f3460;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .edit-btn:hover {
+      background: #0f3460;
+      color: #eee;
+    }
+
+    .edit-form {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #16213e;
+      color: #eee;
+      font-size: 0.875rem;
+      font-family: inherit;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #0f3460;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .save-btn {
+      width: 100%;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 4px;
+      background: #27ae60;
+      color: #eee;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .save-btn:hover {
+      background: #229954;
+    }
+
     @media (max-width: 768px) {
       .games-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -179,6 +285,14 @@ export class LibraryComponent implements OnInit {
   loading = false;
   error = '';
   updatingGame: string | null = null;
+  editingGame: string | null = null;
+  editForm: UpdatePersonalInfoRequest = {
+    platform: null,
+    startDate: null,
+    endDate: null,
+    personalNote: null,
+    rating: null,
+  };
 
   constructor(private libraryService: LibraryService) {}
 
@@ -218,6 +332,55 @@ export class LibraryComponent implements OnInit {
         this.error = 'Error al actualizar el estado. Intenta de nuevo.';
         this.updatingGame = null;
         console.error('Update status error:', err);
+      },
+    });
+  }
+
+  toggleEditForm(game: LibraryGame): void {
+    if (this.editingGame === game.id) {
+      this.editingGame = null;
+      this.editForm = {
+        platform: null,
+        startDate: null,
+        endDate: null,
+        personalNote: null,
+        rating: null,
+      };
+    } else {
+      this.editingGame = game.id;
+      this.editForm = {
+        platform: game.platform || null,
+        startDate: game.startDate || null,
+        endDate: game.endDate || null,
+        personalNote: game.personalNote || null,
+        rating: game.rating || null,
+      };
+    }
+  }
+
+  savePersonalInfo(game: LibraryGame): void {
+    this.updatingGame = game.id;
+
+    this.libraryService.updatePersonalInfo(game.id, this.editForm).subscribe({
+      next: (updatedGame) => {
+        const index = this.games.findIndex((g) => g.id === game.id);
+        if (index !== -1) {
+          this.games[index] = updatedGame;
+        }
+        this.editingGame = null;
+        this.updatingGame = null;
+        this.editForm = {
+          platform: null,
+          startDate: null,
+          endDate: null,
+          personalNote: null,
+          rating: null,
+        };
+      },
+      error: (err) => {
+        this.error = 'Error al guardar la información. Intenta de nuevo.';
+        this.updatingGame = null;
+        console.error('Update personal info error:', err);
       },
     });
   }

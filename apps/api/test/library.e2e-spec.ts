@@ -172,4 +172,92 @@ describe('LibraryController (e2e)', () => {
         });
     });
   });
+
+  describe('PATCH /api/v1/library/games/:id/personal-info', () => {
+    let gameId: string;
+
+    beforeAll(async () => {
+      // Add a game to update its personal info
+      const response = await request(app.getHttpServer())
+        .post('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          externalGameId: 888,
+          title: 'Personal Info Test Game',
+        });
+      gameId = response.body.id;
+    });
+
+    it('should update personal info', () => {
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/personal-info`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          platform: 'PC',
+          startDate: '2023-01-01',
+          endDate: '2023-06-01',
+          personalNote: 'Great game!',
+          rating: 9,
+        })
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.platform).toBe('PC');
+          expect(res.body.startDate).toBe('2023-01-01');
+          expect(res.body.endDate).toBe('2023-06-01');
+          expect(res.body.personalNote).toBe('Great game!');
+          expect(res.body.rating).toBe(9);
+        });
+    });
+
+    it('should update partial personal info', () => {
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/personal-info`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          rating: 10,
+        })
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.rating).toBe(10);
+          expect(res.body.platform).toBe('PC'); // Should keep previous value
+        });
+    });
+
+    it('should reject invalid rating (out of range)', () => {
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/personal-info`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({ rating: 15 })
+        .expect(400);
+    });
+
+    it('should reject non-existent game', () => {
+      return request(app.getHttpServer())
+        .patch('/api/v1/library/games/non-existent-id/personal-info')
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({ platform: 'PS5' })
+        .expect(404);
+    });
+
+    it('should reject unauthenticated request', () => {
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/personal-info`)
+        .send({ platform: 'PS5' })
+        .expect(401);
+    });
+
+    it('should reject other user trying to update', async () => {
+      const otherUserResponse = await request(app.getHttpServer())
+        .post('/api/v1/auth/register')
+        .send({ email: 'other2@test.com', password: 'password123' });
+
+      const otherAuthToken = otherUserResponse.body.access_token;
+
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/personal-info`)
+        .set('Authorization', `Bearer ${otherAuthToken}`)
+        .send({ platform: 'Xbox' })
+        .expect(403);
+    });
+  });
 });

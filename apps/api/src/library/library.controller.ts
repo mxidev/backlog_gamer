@@ -2,6 +2,7 @@ import { Controller, Post, Body, UseGuards, Req, Get, Patch, Param } from '@nest
 import { LibraryService } from './library.service';
 import { AddGameDto } from './dto/add-game.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
+import { UpdatePersonalInfoDto } from './dto/update-personal-info.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('api/v1/library')
@@ -35,5 +36,15 @@ export class LibraryController {
   ) {
     const userId = req.user.id;
     return this.libraryService.updateGameStatus(userId, id, dto.status);
+  }
+
+  @Patch('games/:id/personal-info')
+  async updatePersonalInfo(
+    @Req() req: any,
+    @Param('id') id: string,
+    @Body() dto: UpdatePersonalInfoDto,
+  ) {
+    const userId = req.user.id;
+    return this.libraryService.updatePersonalInfo(userId, id, dto);
   }
 }

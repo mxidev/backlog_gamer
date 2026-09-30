@@ -7,4 +7,9 @@ export interface LibraryGame {
   released: string | null;
   status: 'pending' | 'playing' | 'completed' | 'abandoned';
   addedAt: Date;
+  platform?: string | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  personalNote?: string | null;
+  rating?: number | null;
 }
