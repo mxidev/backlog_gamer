@@ -104,4 +104,72 @@ describe('LibraryController (e2e)', () => {
         .expect(401);
     });
   });
+
+  describe('PATCH /api/v1/library/games/:id/status', () => {
+    let gameId: string;
+
+    beforeAll(async () => {
+      // Add a game to update its status
+      const response = await request(app.getHttpServer())
+        .post('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          externalGameId: 999,
+          title: 'Status Test Game',
+        });
+      gameId = response.body.id;
+    });
+
+    it('should update game status', () => {
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/status`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({ status: 'playing' })
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.status).toBe('playing');
+        });
+    });
+
+    it('should reject invalid status', () => {
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/status`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({ status: 'invalid' })
+        .expect(400);
+    });
+
+    it('should reject non-existent game', () => {
+      return request(app.getHttpServer())
+        .patch('/api/v1/library/games/non-existent-id/status')
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({ status: 'playing' })
+        .expect(404);
+    });
+
+    it('should reject unauthenticated request', () => {
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/status`)
+        .send({ status: 'playing' })
+        .expect(401);
+    });
+
+    it('should reject other user trying to update', async () => {
+      // Register another user
+      const otherUserResponse = await request(app.getHttpServer())
+        .post('/api/v1/auth/register')
+        .send({ email: 'other@test.com', password: 'password123' });
+
+      const otherAuthToken = otherUserResponse.body.access_token;
+
+      return request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/status`)
+        .set('Authorization', `Bearer ${otherAuthToken}`)
+        .send({ status: 'completed' })
+        .expect(403)
+        .expect((res) => {
+          expect(res.body.message).toContain('No puedes modificar juegos de otros usuarios');
+        });
+    });
+  });
 });
