@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
       <p>Bienvenido a tu biblioteca de videojuegos</p>
       <div class="actions">
         <button (click)="goToSearch()" class="btn-primary">Buscar videojuegos</button>
+        <button (click)="goToLibrary()" class="btn-primary">Ver mi biblioteca</button>
         <button (click)="logout()" class="btn-secondary">Cerrar sesión</button>
       </div>
     </div>
@@ -37,6 +38,7 @@ import { Router } from '@angular/router';
         display: flex;
         gap: 1rem;
         justify-content: center;
+        flex-wrap: wrap;
       }
 
       button {
@@ -76,6 +78,10 @@ export class HomeComponent {
 
   goToSearch(): void {
     this.router.navigate(['/search']);
+  }
+
+  goToLibrary(): void {
+    this.router.navigate(['/library']);
   }
 
   logout(): void {
