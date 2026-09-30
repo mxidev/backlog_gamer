@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { LibraryService, LibraryGame } from './library.service';
 
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   template: `
     <div class="library-container">
       <h1>Mi Biblioteca</h1>
@@ -39,9 +40,17 @@ import { LibraryService, LibraryGame } from './library.service';
                 @if (game.released) {
                   <p class="game-year">{{ game.released | date:'yyyy' }}</p>
                 }
-                <div class="game-status" [class]="'status-' + game.status">
-                  {{ getStatusLabel(game.status) }}
-                </div>
+                <select
+                  class="status-select"
+                  [ngModel]="game.status"
+                  (ngModelChange)="updateStatus(game, $event)"
+                  [disabled]="updatingGame === game.id"
+                >
+                  <option value="pending">Pendiente</option>
+                  <option value="playing">Jugando</option>
+                  <option value="completed">Completado</option>
+                  <option value="abandoned">Abandonado</option>
+                </select>
               </div>
             </div>
           }
@@ -132,33 +141,25 @@ import { LibraryService, LibraryGame } from './library.service';
       margin: 0 0 0.75rem 0;
     }
 
-    .game-status {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
+    .status-select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #333;
       border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: uppercase;
+      background: #16213e;
+      color: #eee;
+      font-size: 0.875rem;
+      cursor: pointer;
     }
 
-    .status-pending {
-      background: #34495e;
-      color: #bdc3c7;
+    .status-select:focus {
+      outline: none;
+      border-color: #0f3460;
     }
 
-    .status-playing {
-      background: #2980b9;
-      color: #ecf0f1;
-    }
-
-    .status-completed {
-      background: #27ae60;
-      color: #ecf0f1;
-    }
-
-    .status-abandoned {
-      background: #7f8c8d;
-      color: #ecf0f1;
+    .status-select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     @media (max-width: 768px) {
@@ -177,6 +178,7 @@ export class LibraryComponent implements OnInit {
   games: LibraryGame[] = [];
   loading = false;
   error = '';
+  updatingGame: string | null = null;
 
   constructor(private libraryService: LibraryService) {}
 
@@ -201,13 +203,22 @@ export class LibraryComponent implements OnInit {
     });
   }
 
-  getStatusLabel(status: string): string {
-    const labels: Record<string, string> = {
-      pending: 'Pendiente',
-      playing: 'Jugando',
-      completed: 'Completado',
-      abandoned: 'Abandonado',
-    };
-    return labels[status] || status;
+  updateStatus(game: LibraryGame, status: LibraryGame['status']): void {
+    this.updatingGame = game.id;
+
+    this.libraryService.updateGameStatus(game.id, status).subscribe({
+      next: (updatedGame) => {
+        const index = this.games.findIndex((g) => g.id === game.id);
+        if (index !== -1) {
+          this.games[index] = updatedGame;
+        }
+        this.updatingGame = null;
+      },
+      error: (err) => {
+        this.error = 'Error al actualizar el estado. Intenta de nuevo.';
+        this.updatingGame = null;
+        console.error('Update status error:', err);
+      },
+    });
   }
 }
