@@ -43,9 +43,12 @@ Estado: Done (2026-09-30)
 ### LIB-002 — Ver mi biblioteca de videojuegos
 Estado: Done (2026-09-30)
 
+### LIB-003 — Cambiar el estado de un videojuego
+Estado: Done (2026-09-30)
+
 ## Próximo trabajo recomendado
 
-1. Implementar LIB-003 (cambiar el estado de un videojuego).
+1. Implementar LIB-004 (registrar información personal de un videojuego).
 2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
@@ -84,4 +87,4 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-Implementar LIB-003 (cambiar el estado de un videojuego) o LIB-004 (registrar información personal de un videojuego).
+Implementar LIB-004 (registrar información personal de un videojuego) o LIB-005 (eliminar un videojuego de mi biblioteca).

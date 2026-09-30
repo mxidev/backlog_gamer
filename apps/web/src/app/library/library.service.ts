@@ -33,4 +33,8 @@ export class LibraryService {
   getUserLibrary(): Observable<LibraryGame[]> {
     return this.http.get<LibraryGame[]>(`${this.apiUrl}/games`);
   }
+
+  updateGameStatus(gameId: string, status: LibraryGame['status']): Observable<LibraryGame> {
+    return this.http.patch<LibraryGame>(`${this.apiUrl}/games/${gameId}/status`, { status });
+  }
 }

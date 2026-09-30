@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { LibraryGame } from './library.entity';
 
 @Injectable()
@@ -37,5 +37,24 @@ export class LibraryService {
 
   async getUserLibrary(userId: string): Promise<LibraryGame[]> {
     return this.library.filter((game) => game.userId === userId);
+  }
+
+  async updateGameStatus(
+    userId: string,
+    gameId: string,
+    status: LibraryGame['status'],
+  ): Promise<LibraryGame> {
+    const game = this.library.find((g) => g.id === gameId);
+
+    if (!game) {
+      throw new NotFoundException('Juego no encontrado');
+    }
+
+    if (game.userId !== userId) {
+      throw new ForbiddenException('No puedes modificar juegos de otros usuarios');
+    }
+
+    game.status = status;
+    return game;
   }
 }
