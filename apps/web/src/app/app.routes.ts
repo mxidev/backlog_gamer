@@ -8,6 +8,12 @@ export const routes: Routes = [
       import('./auth/login.component').then((m) => m.LoginComponent),
   },
   {
+    path: 'library',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./library/library.component').then((m) => m.LibraryComponent),
+  },
+  {
     path: 'search',
     canActivate: [authGuard],
     loadComponent: () =>
