@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req, Get, Patch, Param } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, Get, Patch, Param, Delete } from '@nestjs/common';
 import { LibraryService } from './library.service';
 import { AddGameDto } from './dto/add-game.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
@@ -46,5 +46,12 @@ export class LibraryController {
   ) {
     const userId = req.user.id;
     return this.libraryService.updatePersonalInfo(userId, id, dto);
+  }
+
+  @Delete('games/:id')
+  async deleteGame(@Req() req: any, @Param('id') id: string) {
+    const userId = req.user.id;
+    await this.libraryService.deleteGame(userId, id);
+    return { success: true };
   }
 }
