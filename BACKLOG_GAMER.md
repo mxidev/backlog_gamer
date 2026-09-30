@@ -206,7 +206,7 @@ Como jugador, quiero revisar información básica de un videojuego antes de agre
 **Epic:** Library  
 **Prioridad:** Must  
 **Story Points:** 5  
-**Estado:** Backlog  
+**Estado:** Done  
 **Dependencias:** AUTH-001, CAT-001
 
 ### Historia

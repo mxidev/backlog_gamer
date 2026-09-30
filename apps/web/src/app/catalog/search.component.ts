@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CatalogService, GameSearchResult } from './catalog.service';
+import { LibraryService } from '../library/library.service';
 
 @Component({
   selector: 'app-search',
@@ -47,6 +48,19 @@ import { CatalogService, GameSearchResult } from './catalog.service';
                 @if (game.released) {
                   <p class="game-year">{{ game.released | date:'yyyy' }}</p>
                 }
+                <button
+                  class="add-btn"
+                  (click)="addToLibrary(game)"
+                  [disabled]="addedGames.has(game.id) || addingGame === game.id"
+                >
+                  @if (addingGame === game.id) {
+                    Agregando...
+                  } @else if (addedGames.has(game.id)) {
+                    ✓ Agregado
+                  } @else {
+                    + Agregar
+                  }
+                </button>
               </div>
             </div>
           }
@@ -143,6 +157,29 @@ import { CatalogService, GameSearchResult } from './catalog.service';
       font-size: 0.875rem;
       margin: 0;
     }
+
+    .add-btn {
+      margin-top: 0.75rem;
+      width: 100%;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 4px;
+      background: #0f3460;
+      color: #eee;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .add-btn:hover:not(:disabled) {
+      background: #1a4a8a;
+    }
+
+    .add-btn:disabled {
+      background: #333;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
   `],
 })
 export class SearchComponent {
@@ -150,9 +187,14 @@ export class SearchComponent {
   results: GameSearchResult[] = [];
   loading = false;
   error = '';
+  addedGames = new Set<number>();
+  addingGame: number | null = null;
   private searchTimeout: any;
 
-  constructor(private catalogService: CatalogService) {}
+  constructor(
+    private catalogService: CatalogService,
+    private libraryService: LibraryService,
+  ) {}
 
   onSearch(): void {
     clearTimeout(this.searchTimeout);
@@ -183,5 +225,28 @@ export class SearchComponent {
         console.error('Search error:', err);
       },
     });
+  }
+
+  addToLibrary(game: GameSearchResult): void {
+    this.addingGame = game.id;
+
+    this.libraryService
+      .addGame({
+        externalGameId: game.id,
+        title: game.name,
+        coverImage: game.backgroundImage,
+        released: game.released,
+      })
+      .subscribe({
+        next: () => {
+          this.addedGames.add(game.id);
+          this.addingGame = null;
+        },
+        error: (err) => {
+          this.addingGame = null;
+          console.error('Error adding game:', err);
+          this.error = 'Error al agregar el juego. Intenta de nuevo.';
+        },
+      });
   }
 }
