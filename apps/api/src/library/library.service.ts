@@ -57,4 +57,34 @@ export class LibraryService {
     game.status = status;
     return game;
   }
+
+  async updatePersonalInfo(
+    userId: string,
+    gameId: string,
+    updates: {
+      platform?: string | null;
+      startDate?: string | null;
+      endDate?: string | null;
+      personalNote?: string | null;
+      rating?: number | null;
+    },
+  ): Promise<LibraryGame> {
+    const game = this.library.find((g) => g.id === gameId);
+
+    if (!game) {
+      throw new NotFoundException('Juego no encontrado');
+    }
+
+    if (game.userId !== userId) {
+      throw new ForbiddenException('No puedes modificar juegos de otros usuarios');
+    }
+
+    if (updates.platform !== undefined) game.platform = updates.platform;
+    if (updates.startDate !== undefined) game.startDate = updates.startDate;
+    if (updates.endDate !== undefined) game.endDate = updates.endDate;
+    if (updates.personalNote !== undefined) game.personalNote = updates.personalNote;
+    if (updates.rating !== undefined) game.rating = updates.rating;
+
+    return game;
+  }
 }
