@@ -9,7 +9,7 @@
 
 ## Estado general
 
-MVP en progreso. AUTH-001 y CAT-001 completadas.
+MVP en progreso. AUTH-001, CAT-001 y LIB-001 completadas.
 
 ## Trabajo actual
 
@@ -37,9 +37,15 @@ Estado: Done (2026-09-29)
 ### CAT-001 — Buscar videojuegos en un catálogo
 Estado: Done (2026-09-30)
 
+### LIB-001 — Agregar un videojuego a mi biblioteca
+Estado: Done (2026-09-30)
+
+### LIB-002 — Ver mi biblioteca de videojuegos
+Estado: Done (2026-09-30)
+
 ## Próximo trabajo recomendado
 
-1. Implementar CAT-002 (ver información básica de un videojuego).
+1. Implementar LIB-003 (cambiar el estado de un videojuego).
 2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
@@ -78,4 +84,4 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-Implementar CAT-002 (ver información básica de un videojuego) o LIB-001 (agregar videojuego a biblioteca).
+Implementar LIB-003 (cambiar el estado de un videojuego) o LIB-004 (registrar información personal de un videojuego).
