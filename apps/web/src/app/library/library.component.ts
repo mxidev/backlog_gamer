@@ -54,6 +54,9 @@ import { LibraryService, LibraryGame, UpdatePersonalInfoRequest } from './librar
                 <button class="edit-btn" (click)="toggleEditForm(game)">
                   {{ editingGame === game.id ? 'Cancelar' : 'Editar info' }}
                 </button>
+                <button class="delete-btn" (click)="confirmDelete(game)">
+                  Eliminar
+                </button>
                 @if (editingGame === game.id) {
                   <div class="edit-form">
                     <input
@@ -222,6 +225,24 @@ import { LibraryService, LibraryGame, UpdatePersonalInfoRequest } from './librar
       color: #eee;
     }
 
+    .delete-btn {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      border: 1px solid #e74c3c;
+      border-radius: 4px;
+      background: transparent;
+      color: #e74c3c;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .delete-btn:hover {
+      background: #e74c3c;
+      color: #eee;
+    }
+
     .edit-form {
       margin-top: 0.75rem;
       display: flex;
@@ -381,6 +402,29 @@ export class LibraryComponent implements OnInit {
         this.error = 'Error al guardar la información. Intenta de nuevo.';
         this.updatingGame = null;
         console.error('Update personal info error:', err);
+      },
+    });
+  }
+
+  confirmDelete(game: LibraryGame): void {
+    const confirmed = confirm(`¿Estás seguro de que quieres eliminar "${game.title}" de tu biblioteca?`);
+    if (confirmed) {
+      this.deleteGame(game);
+    }
+  }
+
+  deleteGame(game: LibraryGame): void {
+    this.updatingGame = game.id;
+
+    this.libraryService.deleteGame(game.id).subscribe({
+      next: () => {
+        this.games = this.games.filter((g) => g.id !== game.id);
+        this.updatingGame = null;
+      },
+      error: (err) => {
+        this.error = 'Error al eliminar el juego. Intenta de nuevo.';
+        this.updatingGame = null;
+        console.error('Delete game error:', err);
       },
     });
   }
