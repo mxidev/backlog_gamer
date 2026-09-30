@@ -11,6 +11,11 @@ export interface LibraryGame {
   released: string | null;
   status: 'pending' | 'playing' | 'completed' | 'abandoned';
   addedAt: string;
+  platform?: string | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  personalNote?: string | null;
+  rating?: number | null;
 }
 
 export interface AddGameRequest {
@@ -18,6 +23,14 @@ export interface AddGameRequest {
   title: string;
   coverImage?: string | null;
   released?: string | null;
+}
+
+export interface UpdatePersonalInfoRequest {
+  platform?: string | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  personalNote?: string | null;
+  rating?: number | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -36,5 +49,9 @@ export class LibraryService {
 
   updateGameStatus(gameId: string, status: LibraryGame['status']): Observable<LibraryGame> {
     return this.http.patch<LibraryGame>(`${this.apiUrl}/games/${gameId}/status`, { status });
+  }
+
+  updatePersonalInfo(gameId: string, info: UpdatePersonalInfoRequest): Observable<LibraryGame> {
+    return this.http.patch<LibraryGame>(`${this.apiUrl}/games/${gameId}/personal-info`, info);
   }
 }
