@@ -1,3 +1,5 @@
+import { JWT_SECRET } from './constants';
+
 export interface AppConfig {
   port: number;
   jwtSecret: string;
@@ -6,7 +8,6 @@ export interface AppConfig {
 
 export function loadConfig(): AppConfig {
   const port = process.env.PORT;
-  const jwtSecret = process.env.JWT_SECRET;
   const rawgApiKey = process.env.RAWG_API_KEY;
 
   if (port === undefined || port === '') {
@@ -19,17 +20,13 @@ export function loadConfig(): AppConfig {
     throw new Error(`Invalid PORT value: ${port}. Must be a number between 1 and 65535`);
   }
 
-  if (!jwtSecret) {
-    throw new Error('Environment variable JWT_SECRET is required');
-  }
-
   if (!rawgApiKey) {
     throw new Error('Environment variable RAWG_API_KEY is required');
   }
 
   return {
     port: parsedPort,
-    jwtSecret,
+    jwtSecret: JWT_SECRET,
     rawgApiKey,
   };
 }

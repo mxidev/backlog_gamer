@@ -1,11 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { config } from 'dotenv';
-import { resolve } from 'path';
 import { AppModule } from './app.module';
 import { loadConfig } from './config';
-
-config({ path: resolve(__dirname, '..', '.env') });
 
 async function bootstrap() {
   const appConfig = loadConfig();
