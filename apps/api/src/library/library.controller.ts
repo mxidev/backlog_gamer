@@ -1,8 +1,9 @@
-import { Controller, Post, Body, UseGuards, Req, Get, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, Get, Patch, Param, Delete, Query } from '@nestjs/common';
 import { LibraryService } from './library.service';
 import { AddGameDto } from './dto/add-game.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { UpdatePersonalInfoDto } from './dto/update-personal-info.dto';
+import { SearchLibraryDto } from './dto/search-library.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('api/v1/library')
@@ -26,6 +27,18 @@ export class LibraryController {
   async getUserLibrary(@Req() req: any) {
     const userId = req.user.id;
     return this.libraryService.getUserLibrary(userId);
+  }
+
+  @Get('games/search')
+  async searchLibrary(@Req() req: any, @Query() query: SearchLibraryDto) {
+    const userId = req.user.id;
+    return this.libraryService.searchLibrary(
+      userId,
+      query.q,
+      query.status,
+      query.sortBy,
+      query.sortOrder,
+    );
   }
 
   @Patch('games/:id/status')

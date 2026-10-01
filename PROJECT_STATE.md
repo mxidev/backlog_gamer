@@ -52,9 +52,12 @@ Estado: Done (2026-09-30)
 ### LIB-005 — Eliminar un videojuego de mi biblioteca
 Estado: Done (2026-09-30)
 
+### LIB-006 — Buscar, filtrar y ordenar mi biblioteca
+Estado: Done (2026-10-01)
+
 ## Próximo trabajo recomendado
 
-1. Implementar LIB-006 (buscar, filtrar y ordenar mi biblioteca).
+1. Implementar DASH-001 (ver un resumen de mi backlog).
 2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
 
 ## Flujo de desarrollo acordado
@@ -93,4 +96,4 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-Implementar LIB-006 (buscar, filtrar y ordenar mi biblioteca) o DASH-001 (ver un resumen de mi backlog).
+Implementar DASH-001 (ver un resumen de mi backlog) o UX-001 (recibir estados claros de carga, vacío y error).
