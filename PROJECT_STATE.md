@@ -5,11 +5,11 @@
 
 ## Última actualización
 
-2026-09-30
+2026-10-01
 
 ## Estado general
 
-MVP en progreso. AUTH-001, CAT-001 y LIB-001 completadas.
+MVP en progreso. Sprint 0 completado. HUs de autenticación, catálogo y biblioteca completadas (AUTH-001, CAT-001, LIB-001 a LIB-006). Fix de JWT secret aplicado.
 
 ## Trabajo actual
 
