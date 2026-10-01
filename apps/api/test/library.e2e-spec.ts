@@ -351,4 +351,132 @@ describe('LibraryController (e2e)', () => {
         });
     });
   });
+
+  describe('GET /api/v1/library/games/search', () => {
+    beforeAll(async () => {
+      // Add some test games with different statuses
+      await request(app.getHttpServer())
+        .post('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          externalGameId: 111,
+          title: 'Zelda Breath of the Wild',
+        });
+
+      await request(app.getHttpServer())
+        .post('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          externalGameId: 222,
+          title: 'Mario Odyssey',
+        });
+
+      await request(app.getHttpServer())
+        .post('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({
+          externalGameId: 333,
+          title: 'Metroid Dread',
+        });
+    });
+
+    it('should search games by title', () => {
+      return request(app.getHttpServer())
+        .get('/api/v1/library/games/search?q=zelda')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200)
+        .expect((res) => {
+          expect(Array.isArray(res.body)).toBe(true);
+          expect(res.body.length).toBe(1);
+          expect(res.body[0].title).toContain('Zelda');
+        });
+    });
+
+    it('should filter games by status', async () => {
+      // Get all games first
+      const allGamesResponse = await request(app.getHttpServer())
+        .get('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200);
+
+      const gameId = allGamesResponse.body.find((g) => g.title === 'Mario Odyssey').id;
+
+      // Update status to 'playing'
+      await request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/status`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({ status: 'playing' })
+        .expect(200);
+
+      // Filter by status
+      return request(app.getHttpServer())
+        .get('/api/v1/library/games/search?status=playing')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200)
+        .expect((res) => {
+          expect(Array.isArray(res.body)).toBe(true);
+          expect(res.body.length).toBeGreaterThan(0);
+          expect(res.body.every((g) => g.status === 'playing')).toBe(true);
+        });
+    });
+
+    it('should sort games by title', () => {
+      return request(app.getHttpServer())
+        .get('/api/v1/library/games/search?sortBy=title&sortOrder=asc')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200)
+        .expect((res) => {
+          expect(Array.isArray(res.body)).toBe(true);
+          const titles = res.body.map((g) => g.title);
+          const sorted = [...titles].sort();
+          expect(titles).toEqual(sorted);
+        });
+    });
+
+    it('should combine search and filter', async () => {
+      // Get all games first
+      const allGamesResponse = await request(app.getHttpServer())
+        .get('/api/v1/library/games')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200);
+
+      const gameId = allGamesResponse.body.find((g) => g.title === 'Metroid Dread').id;
+
+      // Update status to 'completed'
+      await request(app.getHttpServer())
+        .patch(`/api/v1/library/games/${gameId}/status`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .send({ status: 'completed' })
+        .expect(200);
+
+      // Search and filter
+      return request(app.getHttpServer())
+        .get('/api/v1/library/games/search?q=metroid&status=completed')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200)
+        .expect((res) => {
+          expect(Array.isArray(res.body)).toBe(true);
+          expect(res.body.length).toBe(1);
+          expect(res.body[0].title).toContain('Metroid');
+          expect(res.body[0].status).toBe('completed');
+        });
+    });
+
+    it('should return empty array when no matches', () => {
+      return request(app.getHttpServer())
+        .get('/api/v1/library/games/search?q=nonexistentgame')
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200)
+        .expect((res) => {
+          expect(Array.isArray(res.body)).toBe(true);
+          expect(res.body.length).toBe(0);
+        });
+    });
+
+    it('should reject unauthenticated request', () => {
+      return request(app.getHttpServer())
+        .get('/api/v1/library/games/search?q=test')
+        .expect(401);
+    });
+  });
 });

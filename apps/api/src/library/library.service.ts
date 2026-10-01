@@ -39,6 +39,44 @@ export class LibraryService {
     return this.library.filter((game) => game.userId === userId);
   }
 
+  async searchLibrary(
+    userId: string,
+    query?: string,
+    status?: LibraryGame['status'],
+    sortBy?: 'title' | 'addedAt',
+    sortOrder?: 'asc' | 'desc',
+  ): Promise<LibraryGame[]> {
+    let results = this.library.filter((game) => game.userId === userId);
+
+    // Filter by search query (title)
+    if (query && query.trim()) {
+      const searchLower = query.toLowerCase();
+      results = results.filter((game) =>
+        game.title.toLowerCase().includes(searchLower),
+      );
+    }
+
+    // Filter by status
+    if (status) {
+      results = results.filter((game) => game.status === status);
+    }
+
+    // Sort results
+    if (sortBy) {
+      results.sort((a, b) => {
+        let comparison = 0;
+        if (sortBy === 'title') {
+          comparison = a.title.localeCompare(b.title);
+        } else if (sortBy === 'addedAt') {
+          comparison = new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime();
+        }
+        return sortOrder === 'desc' ? -comparison : comparison;
+      });
+    }
+
+    return results;
+  }
+
   async updateGameStatus(
     userId: string,
     gameId: string,
