@@ -11,6 +11,33 @@ import { LibraryService, LibraryGame, UpdatePersonalInfoRequest } from './librar
     <div class="library-container">
       <h1>Mi Biblioteca</h1>
 
+      <div class="filters">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          placeholder="Buscar por título..."
+          class="search-input"
+        />
+        <select [(ngModel)]="filterStatus" (ngModelChange)="applyFilters()" class="filter-select">
+          <option value="">Todos los estados</option>
+          <option value="pending">Pendiente</option>
+          <option value="playing">Jugando</option>
+          <option value="completed">Completado</option>
+          <option value="abandoned">Abandonado</option>
+        </select>
+        <select [(ngModel)]="sortBy" (ngModelChange)="applyFilters()" class="filter-select">
+          <option value="">Ordenar por...</option>
+          <option value="title">Título</option>
+          <option value="addedAt">Fecha de agregado</option>
+        </select>
+        <select [(ngModel)]="sortOrder" (ngModelChange)="applyFilters()" class="filter-select">
+          <option value="asc">Ascendente</option>
+          <option value="desc">Descendente</option>
+        </select>
+        <button (click)="clearFilters()" class="clear-btn">Limpiar filtros</button>
+      </div>
+
       @if (loading) {
         <div class="loading">Cargando tu biblioteca...</div>
       }
@@ -113,6 +140,60 @@ import { LibraryService, LibraryGame, UpdatePersonalInfoRequest } from './librar
     h1 {
       color: #eee;
       margin-bottom: 1.5rem;
+    }
+
+    .filters {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.5rem;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #16213e;
+      color: #eee;
+      font-size: 0.875rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #0f3460;
+    }
+
+    .filter-select {
+      padding: 0.5rem;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #16213e;
+      color: #eee;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: #0f3460;
+    }
+
+    .clear-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid #e74c3c;
+      border-radius: 4px;
+      background: transparent;
+      color: #e74c3c;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .clear-btn:hover {
+      background: #e74c3c;
+      color: #eee;
     }
 
     .loading, .error, .empty {
@@ -298,6 +379,15 @@ import { LibraryService, LibraryGame, UpdatePersonalInfoRequest } from './librar
       .game-image, .game-image-placeholder {
         height: 150px;
       }
+
+      .filters {
+        flex-direction: column;
+      }
+
+      .search-input,
+      .filter-select {
+        width: 100%;
+      }
     }
   `],
 })
@@ -314,6 +404,13 @@ export class LibraryComponent implements OnInit {
     personalNote: null,
     rating: null,
   };
+
+  // Filtros y búsqueda
+  searchQuery = '';
+  filterStatus = '';
+  sortBy = '';
+  sortOrder = 'asc';
+  private searchTimeout: any;
 
   constructor(private libraryService: LibraryService) {}
 
@@ -427,5 +524,49 @@ export class LibraryComponent implements OnInit {
         console.error('Delete game error:', err);
       },
     });
+  }
+
+  onSearch(): void {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.applyFilters();
+    }, 300);
+  }
+
+  applyFilters(): void {
+    this.loading = true;
+    this.error = '';
+
+    const params: any = {};
+    if (this.searchQuery.trim()) {
+      params.q = this.searchQuery.trim();
+    }
+    if (this.filterStatus) {
+      params.status = this.filterStatus;
+    }
+    if (this.sortBy) {
+      params.sortBy = this.sortBy;
+      params.sortOrder = this.sortOrder;
+    }
+
+    this.libraryService.searchLibrary(params).subscribe({
+      next: (games) => {
+        this.games = games;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Error al buscar juegos. Intenta de nuevo.';
+        this.loading = false;
+        console.error('Search library error:', err);
+      },
+    });
+  }
+
+  clearFilters(): void {
+    this.searchQuery = '';
+    this.filterStatus = '';
+    this.sortBy = '';
+    this.sortOrder = 'asc';
+    this.loadLibrary();
   }
 }

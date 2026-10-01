@@ -58,4 +58,13 @@ export class LibraryService {
   deleteGame(gameId: string): Observable<{ success: boolean }> {
     return this.http.delete<{ success: boolean }>(`${this.apiUrl}/games/${gameId}`);
   }
+
+  searchLibrary(params: {
+    q?: string;
+    status?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  }): Observable<LibraryGame[]> {
+    return this.http.get<LibraryGame[]>(`${this.apiUrl}/games/search`, { params });
+  }
 }
