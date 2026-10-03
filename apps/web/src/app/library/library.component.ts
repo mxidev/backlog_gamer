@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LibraryGame, LibraryService, UpdatePersonalInfoRequest } from './library.service';
@@ -30,7 +30,10 @@ export class LibraryComponent implements OnInit {
   sortOrder = 'asc';
   private searchTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  constructor(private libraryService: LibraryService) {}
+  constructor(
+    private libraryService: LibraryService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.loadLibrary();
@@ -44,10 +47,12 @@ export class LibraryComponent implements OnInit {
       next: (games) => {
         this.games = games;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Error al cargar tu biblioteca. Intenta de nuevo.';
         this.loading = false;
+        this.cdr.detectChanges();
         console.error('Load library error:', err);
       },
     });
@@ -63,10 +68,12 @@ export class LibraryComponent implements OnInit {
           this.games[index] = updatedGame;
         }
         this.updatingGame = null;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Error al actualizar el estado. Intenta de nuevo.';
         this.updatingGame = null;
+        this.cdr.detectChanges();
         console.error('Update status error:', err);
       },
     });
@@ -112,10 +119,12 @@ export class LibraryComponent implements OnInit {
           personalNote: null,
           rating: null,
         };
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Error al guardar la información. Intenta de nuevo.';
         this.updatingGame = null;
+        this.cdr.detectChanges();
         console.error('Update personal info error:', err);
       },
     });
@@ -137,10 +146,12 @@ export class LibraryComponent implements OnInit {
       next: () => {
         this.games = this.games.filter((g) => g.id !== game.id);
         this.updatingGame = null;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Error al eliminar el juego. Intenta de nuevo.';
         this.updatingGame = null;
+        this.cdr.detectChanges();
         console.error('Delete game error:', err);
       },
     });
@@ -173,10 +184,12 @@ export class LibraryComponent implements OnInit {
       next: (games) => {
         this.games = games;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Error al buscar juegos. Intenta de nuevo.';
         this.loading = false;
+        this.cdr.detectChanges();
         console.error('Search library error:', err);
       },
     });

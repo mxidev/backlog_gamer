@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LibraryGame, LibraryService } from '../library/library.service';
 
@@ -19,17 +19,22 @@ export class HomeComponent implements OnInit {
     () => this.games().filter((game) => game.status === 'completed').length,
   );
 
-  constructor(private readonly libraryService: LibraryService) {}
+  constructor(
+    private readonly libraryService: LibraryService,
+    private readonly cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.libraryService.getUserLibrary().subscribe({
       next: (games) => {
         this.games.set(games);
         this.loading.set(false);
+        this.cdr.detectChanges();
       },
       error: () => {
         this.loadError.set(true);
         this.loading.set(false);
+        this.cdr.detectChanges();
       },
     });
   }

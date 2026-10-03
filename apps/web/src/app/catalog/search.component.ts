@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LibraryService } from '../library/library.service';
 import { CatalogService, GameSearchResult } from './catalog.service';
@@ -22,6 +22,7 @@ export class SearchComponent {
   constructor(
     private catalogService: CatalogService,
     private libraryService: LibraryService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   onSearch(): void {
@@ -47,10 +48,12 @@ export class SearchComponent {
       next: (results) => {
         this.results = results;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Error al buscar videojuegos. Intenta de nuevo.';
         this.loading = false;
+        this.cdr.detectChanges();
         console.error('Search error:', err);
       },
     });
@@ -67,15 +70,17 @@ export class SearchComponent {
         released: game.released,
       })
       .subscribe({
-        next: () => {
-          this.addedGames.add(game.id);
-          this.addingGame = null;
-        },
-        error: (err) => {
-          this.addingGame = null;
-          console.error('Error adding game:', err);
-          this.error = 'Error al agregar el juego. Intenta de nuevo.';
-        },
+      next: () => {
+        this.addedGames.add(game.id);
+        this.addingGame = null;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.addingGame = null;
+        this.error = 'Error al agregar el juego. Intenta de nuevo.';
+        this.cdr.detectChanges();
+        console.error('Error adding game:', err);
+      },
       });
   }
 }
