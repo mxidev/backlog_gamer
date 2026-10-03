@@ -1,0 +1,150 @@
+.site-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-header {
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid var(--line);
+  background: #0c1021e8;
+  backdrop-filter: blur(16px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-height: 76px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex: none;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: var(--accent);
+  color: #16102d;
+  border-radius: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.16em;
+  padding-right: 4px;
+
+  span {
+    color: #443187;
+  }
+}
+
+.brand-name {
+  font-size: 1.03rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+
+  span {
+    color: var(--accent);
+  }
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-inline: auto;
+
+  .nav-link {
+    padding: 0.6rem 0;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover,
+    &.active {
+      color: var(--ink);
+      border-color: var(--accent);
+    }
+  }
+}
+
+.header-exit {
+  flex: none;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  &:hover {
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+}
+
+.header-caption {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.site-content {
+  flex: 1;
+}
+
+.site-footer {
+  margin-top: 4rem;
+  border-top: 1px solid var(--line);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.footer-spark {
+  color: var(--accent);
+}
+
+@media (max-width: 680px) {
+  .header-inner {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem;
+    padding-block: 0.75rem;
+  }
+
+  .site-nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  .brand-name {
+    font-size: 0.9rem;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+  }
+}

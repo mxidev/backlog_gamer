@@ -2,26 +2,45 @@
 
 ## Aplicaciones y comandos
 
-- `apps/web` y `apps/api` son proyectos npm independientes, cada uno con su propio `package-lock.json`. Ejecuta instalaciones y scripts desde la carpeta de la aplicación; no hay scripts en la raíz.
-- Web: `npm start` inicia Angular en el puerto 4200; `npm run build` compila para producción; `npm test` ejecuta las pruebas mediante Angular CLI con Vitest. No asumas que opciones de Vitest como `--run` se aceptan a través de `ng test`.
-- API: `npm run start:dev` inicia NestJS en modo watch; `npm run build` compila a `dist`; `npm test` ejecuta specs bajo `src` (Jest `rootDir` es `src`); `npm run test:e2e` utiliza `test/jest-e2e.json` para las pruebas `test/**/*.e2e-spec.ts`.
-- La API exige `PORT` en `process.env`; `src/config.ts` lo valida, pero actualmente no carga `.env` automáticamente. `npm run lint` de la API incluye ESLint `--fix` y modifica archivos; no es una comprobación de solo lectura.
+- `apps/web` y `apps/api` son proyectos npm independientes con su propio `package-lock.json`; no hay `package.json` ni workspace en la raíz. Ejecuta `npm install` y los scripts desde la carpeta de cada app.
+- Requisitos documentados: Node.js 24.x y npm 11.x.
 
-## Estructura y convenciones
+### Web (Angular 21)
 
-- Web: `src/main.ts` inicia la aplicación standalone definida en `src/app/app.ts`; rutas en `app.routes.ts`, providers globales en `app.config.ts`. Angular genera componentes con SCSS y prefijo `app`; los estilos globales están en `src/styles.scss`.
-- API: `src/main.ts` inicia `AppModule`; registra nuevas funcionalidades desde el módulo correspondiente.
-- Prettier web: comillas simples, ancho 100 y parser Angular para HTML. API: comillas simples y comas finales.
+- `npm start` — servidor de desarrollo en `http://localhost:4200`.
+- `npm run build` — build de producción.
+- `npm test` — tests a través del builder `@angular/build:unit-test` (`ng test` con Vitest). No pases flags de Vitest directamente por `ng test`.
+- `npm run format` / `npm run format:check` — Prettier. No hay lint configurado todavía.
 
-## Contexto del producto
+### API (NestJS)
 
-- `BACKLOG_GAMER.md` contiene las HUs, criterios de aceptación y estados; `PROJECT_STATE.md` resume el estado y las decisiones del proyecto. Verifica ambos contra código y Git antes de asumir que una funcionalidad o decisión ya existe.
-- Consulta `docs/daily/` o `docs/snapshots/` solo si el contexto actual no basta; evita cargar el historial completo sin necesidad.
-- Mantén la frontera backend para secretos, autorización y APIs externas. No des por decididas persistencia/ORM, Supabase, autenticación, proveedor de catálogo, librería UI o despliegue sin evidencia actual.
+- `npm run start:dev` — servidor en modo watch, escucha en el puerto definido por `PORT`.
+- `npm run build` — compila a `dist/` (`nest-cli.json` borra `deleteOutDir` antes).
+- `npm test` — tests unitarios bajo `src` (Jest `rootDir` es `src`, regex `.*\.spec\.ts$`).
+- `npm run test:e2e` — usa `test/jest-e2e.json` y los archivos `test/**/*.e2e-spec.ts`.
+- `npm run lint` — ESLint **con `--fix`**, modifica archivos; no es una comprobación de solo lectura.
+- `npm run format` — Prettier.
 
-## Definition of Done para HUs
+## Variables de entorno de la API
 
-- Flujo Git: `develop` es la base del MVP; crear ramas por HU antes de implementar y dirigir PRs a `develop`. Seguir `docs/GIT_WORKFLOW.md` y consultar el estado de homologación/publicación en `PROJECT_STATE.md`. Commits y publicación requieren petición explícita.
+- `apps/api/.env` se carga automáticamente como efecto secundario de importar `src/constants.ts` (usa `dotenv` apuntando a `../.env` relativo a `__dirname`), que a su vez importa `src/config.ts`.
+- Aun así, `src/config.ts` valida de forma estricta `PORT` y `RAWG_API_KEY`; si faltan o son inválidas, `loadConfig()` lanza error. `JWT_SECRET` se lee de `.env` pero tiene un fallback por defecto.
+- Copia `apps/api/.env.example` a `.env` y rellena al menos `PORT` y `RAWG_API_KEY` antes de arrancar.
 
-- Criterios de aceptación cumplidos; build y verificaciones relevantes pasan; errores importantes y autorización considerados cuando aplique; sin secretos expuestos y con documentación afectada actualizada.
-- Usa las skills del proyecto en `.agents/skills/` para workflows específicos (`start-session`, `start-hu`, `validate-hu`, `code-review`, `review-status`, `commit`, `close-session`); sus archivos son la fuente del procedimiento detallado.
+## Estructura
+
+- Web: aplicación standalone. `src/main.ts` arranca `App` (`src/app/app.ts`). Rutas en `src/app/app.routes.ts`, providers globales en `src/app/app.config.ts`. Componentes con prefijo `app` y estilos SCSS; estilos globales en `src/styles.scss`; Bootstrap grid se carga desde `angular.json`.
+- API: `src/main.ts` inicia `AppModule`; registra nuevos módulos de dominio importándolos en `AppModule`.
+
+## Formato
+
+- Web (`.prettierrc`): comillas simples, ancho 100, parser Angular para HTML.
+- API (`.prettierrc`): comillas simples y comas finales.
+
+## Contexto del producto y flujo de trabajo
+
+- `BACKLOG_GAMER.md` contiene el backlog con HUs, criterios de aceptación y estados; `PROJECT_STATE.md` resume el estado actual y decisiones. Verifica ambos contra el código y Git antes de asumir que algo está implementado.
+- Base de desarrollo del MVP: `develop`. Crear una rama por HU/Enabler (`feat/<id>-...`) y dirigir PRs a `develop`. Ver procedimiento completo en `docs/GIT_WORKFLOW.md`.
+- Commits, push, PR y merges de entrega requieren petición explícita.
+- Usa las skills de `.agents/skills/` para workflows concretos: `start-session`, `start-hu`, `validate-hu`, `code-review`, `review-status`, `commit`, `close-session`.
+- Mantén secretos, autorización e integraciones externas en el backend. No des por decididas persistencia/ORM, Supabase, proveedor de autenticación definitivo, librería UI o estrategia de despliegue sin evidencia actual.

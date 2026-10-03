@@ -1,1 +1,303 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: dark;
+  --bg: #0c1021;
+  --surface: #161b32;
+  --surface-raised: #1c2340;
+  --line: #303957;
+  --ink: #f6f4ff;
+  --muted: #b5bed3;
+  --accent: #ab8cff;
+  --accent-strong: #8460e8;
+  --mint: #d8f77c;
+  --danger: #ff9ba8;
+  --bs-body-bg: var(--bg);
+  --bs-body-color: var(--ink);
+  --bs-body-font-family: 'DM Sans', sans-serif;
+  --bs-border-color: var(--line);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 88% 0%, #312354 0%, transparent 36%),
+    radial-gradient(ellipse at 5% 55%, #142a42 0%, transparent 32%), var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+.display-title,
+.brand-name {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.035em;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+
+.page-wrap {
+  width: min(100% - 2.5rem, 1280px);
+  margin-inline: auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 2.5rem 0 2rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.page-description {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: var(--mint);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.control-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.app-control {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.68rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #11172d;
+  color: var(--ink);
+
+  &::placeholder {
+    color: #8894ac;
+  }
+
+  &:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px #ab8cff2b;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+  }
+}
+
+.action-primary,
+.action-secondary,
+.action-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.action-primary {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #140d29;
+
+  &:hover:not(:disabled) {
+    background: #c4afff;
+    color: #140d29;
+  }
+}
+
+.action-secondary {
+  border: 1px solid var(--line);
+  background: #ffffff0a;
+  color: var(--ink);
+
+  &:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+}
+
+.action-danger {
+  border: 1px solid #794053;
+  background: transparent;
+  color: var(--danger);
+
+  &:hover:not(:disabled) {
+    background: #562638;
+  }
+}
+
+.notice {
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.notice-error {
+  border-color: #874452;
+  color: #ffd1d6;
+  background: #482438;
+}
+
+.empty-panel {
+  padding: clamp(2rem, 5vw, 4rem);
+  text-align: center;
+  background: var(--surface);
+  border: 1px dashed #535f80;
+  border-radius: 20px;
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  p {
+    color: var(--muted);
+  }
+}
+
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
+  gap: 1.25rem;
+}
+
+.poster-card {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: #8170b7;
+  }
+}
+
+.poster-image,
+.poster-placeholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.poster-placeholder {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: linear-gradient(135deg, #302850, #111e36);
+}
+
+.poster-body {
+  padding: 1rem;
+}
+
+.poster-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.poster-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+  .page-wrap {
+    width: min(100% - 1.5rem, 1280px);
+  }
+
+  .page-header {
+    align-items: start;
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+
+  .poster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .poster-body {
+    padding: 0.75rem;
+  }
+}
