@@ -1,1 +1,32 @@
-<router-outlet />
+<div class="site-shell">
+  <header class="site-header">
+    <div class="page-wrap header-inner">
+      <a routerLink="/home" class="brand" aria-label="Backlog Gamer, inicio">
+        <span class="brand-mark" aria-hidden="true">B<span>G</span></span>
+        <span class="brand-name">BACKLOG<span>GAMER</span></span>
+      </a>
+
+      @if (auth.isAuthenticated) {
+        <nav class="site-nav" aria-label="Navegación principal">
+          <a routerLink="/home" routerLinkActive="active" class="nav-link">Inicio</a>
+          <a routerLink="/search" routerLinkActive="active" class="nav-link">Explorar</a>
+          <a routerLink="/library" routerLinkActive="active" class="nav-link">Mi biblioteca</a>
+        </nav>
+        <button type="button" class="header-exit" (click)="logout()">
+          Salir <span aria-hidden="true">↗</span>
+        </button>
+      } @else {
+        <span class="header-caption">TU ESPACIO PARA JUGAR</span>
+      }
+    </div>
+  </header>
+
+  <main class="site-content"><router-outlet /></main>
+
+  <footer class="site-footer">
+    <div class="page-wrap footer-inner">
+      <span>BACKLOG GAMER <span class="footer-spark" aria-hidden="true">✳</span></span>
+      <span>Juega a tu ritmo. Lleva la cuenta a tu manera.</span>
+    </div>
+  </footer>
+</div>

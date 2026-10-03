@@ -11,6 +11,10 @@
 
 MVP en progreso. Sprint 0 completado. HUs de autenticación, catálogo y biblioteca completadas (AUTH-001, CAT-001, LIB-001 a LIB-006). Fix de JWT secret aplicado.
 
+## Trabajo visual en curso
+
+- Rama local `chore/web-visual-refresh` desde `develop`: rediseño responsivo de acceso, inicio, catálogo y biblioteca con retícula de Bootstrap y paleta propia. Pendiente de revisión visual y de integración; no cambia el estado de las HUs.
+
 ## Trabajo actual
 
 ### EN-001 — Inicializar repositorio y estructura base

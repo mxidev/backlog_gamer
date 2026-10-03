@@ -1,0 +1,100 @@
+<div class="page-wrap home-page">
+  <section class="hero surface">
+    <div class="hero-copy">
+      <span class="eyebrow">TU CUARTEL GENERAL DE JUEGOS</span>
+      <h1 class="display-title">Cada juego tiene<br />su <em>momento.</em></h1>
+      <p>
+        Descubre qué jugar, guarda tus hallazgos y sigue el camino de cada aventura en un solo
+        lugar.
+      </p>
+      <div class="hero-actions">
+        <a class="action-primary" routerLink="/search"
+          >Explorar juegos <span aria-hidden="true">↗</span></a
+        >
+        <a class="action-secondary" routerLink="/library">Ir a mi biblioteca</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="art-disc">
+        <span>PLAY<br />NEXT<span class="art-dot">.</span></span>
+      </div>
+      <span class="art-star art-star-one">✳</span>
+      <span class="art-star art-star-two">✳</span>
+    </div>
+  </section>
+
+  <section class="overview" aria-label="Resumen de biblioteca">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">UN VISTAZO A TU MUNDO</span>
+        <h2>Tu partida, en números</h2>
+      </div>
+      <a routerLink="/library" class="text-link"
+        >Ver biblioteca <span aria-hidden="true">↗</span></a
+      >
+    </div>
+
+    @if (loadError()) {
+      <div class="notice notice-error" role="alert">
+        No pudimos cargar tu resumen. Puedes entrar a tu biblioteca para intentarlo de nuevo.
+      </div>
+    } @else {
+      <div class="row g-3">
+        <div class="col-12 col-sm-4">
+          <div class="stat-card surface">
+            <span class="stat-icon">◇</span>
+            <span class="stat-value">{{ loading() ? '—' : games().length }}</span>
+            <span class="stat-label">En mi biblioteca</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="stat-card surface">
+            <span class="stat-icon">✦</span>
+            <span class="stat-value">{{ loading() ? '—' : playingCount() }}</span>
+            <span class="stat-label">Jugando ahora</span>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="stat-card surface">
+            <span class="stat-icon">✓</span>
+            <span class="stat-value">{{ loading() ? '—' : completedCount() }}</span>
+            <span class="stat-label">Terminados</span>
+          </div>
+        </div>
+      </div>
+    }
+  </section>
+
+  <section class="quick-start">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">ELIGE TU SIGUIENTE PASO</span>
+        <h2>¿Qué hacemos hoy?</h2>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <a routerLink="/search" class="feature-link surface">
+          <span class="feature-symbol" aria-hidden="true">⌕</span>
+          <span class="feature-text"
+            ><strong>Encuentra algo nuevo</strong
+            ><small>Explora el catálogo y guarda tu próxima obsesión.</small></span
+          >
+          <span class="feature-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <div class="col-12 col-md-6">
+        <a routerLink="/library" class="feature-link surface">
+          <span class="feature-symbol" aria-hidden="true">▤</span>
+          <span class="feature-text"
+            ><strong>Vuelve a tus juegos</strong
+            ><small>Organiza lo que juegas y lo que viene después.</small></span
+          >
+          <span class="feature-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

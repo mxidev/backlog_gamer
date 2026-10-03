@@ -1,0 +1,257 @@
+<div class="page-wrap library-page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">TU COLECCIÓN / TU HISTORIA</span>
+      <h1 class="page-title">Mi <span class="title-accent">biblioteca.</span></h1>
+      <p class="page-description">Todo lo que jugaste, juegas y jugarás. A tu manera.</p>
+    </div>
+    <span class="library-count"
+      >{{ games.length }} {{ games.length === 1 ? 'juego' : 'juegos' }}</span
+    >
+  </header>
+
+  <section class="filters surface" aria-label="Filtros de biblioteca">
+    <div class="row g-3 align-items-end">
+      <div class="col-12 col-lg-4">
+        <label for="library-search" class="control-label">Buscar por título</label>
+        <input
+          id="library-search"
+          type="search"
+          class="app-control"
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          placeholder="Encuentra un juego..."
+        />
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <label for="library-status" class="control-label">Estado</label>
+        <select
+          id="library-status"
+          class="app-control"
+          [(ngModel)]="filterStatus"
+          (ngModelChange)="applyFilters()"
+        >
+          <option value="">Todos</option>
+          <option value="pending">Pendiente</option>
+          <option value="playing">Jugando</option>
+          <option value="completed">Completado</option>
+          <option value="abandoned">Abandonado</option>
+        </select>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <label for="library-sort" class="control-label">Ordenar por</label>
+        <select
+          id="library-sort"
+          class="app-control"
+          [(ngModel)]="sortBy"
+          (ngModelChange)="applyFilters()"
+        >
+          <option value="">Sin ordenar</option>
+          <option value="title">Título</option>
+          <option value="addedAt">Fecha de agregado</option>
+        </select>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <label for="library-order" class="control-label">Dirección</label>
+        <select
+          id="library-order"
+          class="app-control"
+          [(ngModel)]="sortOrder"
+          (ngModelChange)="applyFilters()"
+        >
+          <option value="asc">Ascendente</option>
+          <option value="desc">Descendente</option>
+        </select>
+      </div>
+      <div class="col-6 col-lg-2">
+        <button type="button" class="action-secondary clear-button" (click)="clearFilters()">
+          Limpiar
+        </button>
+      </div>
+    </div>
+  </section>
+
+  @if (error) {
+    <div class="notice notice-error mt-4" role="alert">{{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="notice mt-4" role="status">Cargando tu biblioteca...</div>
+  }
+
+  @if (!loading && !error && games.length === 0) {
+    <div class="empty-panel mt-4">
+      <span class="empty-symbol" aria-hidden="true">◇</span>
+      @if (searchQuery || filterStatus) {
+        <h2>Ningún juego coincide con tus filtros</h2>
+        <p>Prueba otra búsqueda o limpia los filtros para ver toda tu colección.</p>
+        <button type="button" class="action-secondary" (click)="clearFilters()">
+          Limpiar filtros
+        </button>
+      } @else {
+        <h2>Tu biblioteca empieza aquí</h2>
+        <p>Visita Explorar para descubrir y guardar tu primer juego.</p>
+        <a class="action-primary" routerLink="/search">Explorar juegos</a>
+      }
+    </div>
+  }
+
+  @if (games.length > 0) {
+    <section class="games-section" aria-label="Juegos de mi biblioteca">
+      <div class="section-heading">
+        <h2>Mis juegos</h2>
+        <span>Tu lista, tus reglas</span>
+      </div>
+      <div class="poster-grid">
+        @for (game of games; track game.id) {
+          <article class="poster-card">
+            <div class="poster-media">
+              @if (game.coverImage) {
+                <img
+                  [src]="game.coverImage"
+                  [alt]="'Portada de ' + game.title"
+                  class="poster-image"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="poster-placeholder" aria-label="Portada no disponible">Sin portada</div>
+              }
+              <span class="status-badge" [class]="'status-' + game.status">
+                @switch (game.status) {
+                  @case ('playing') {
+                    Jugando
+                  }
+                  @case ('completed') {
+                    Completado
+                  }
+                  @case ('abandoned') {
+                    Abandonado
+                  }
+                  @default {
+                    Pendiente
+                  }
+                }
+              </span>
+            </div>
+            <div class="poster-body">
+              <span class="poster-meta">{{
+                game.released ? (game.released | date: 'yyyy') : 'Año no disponible'
+              }}</span>
+              <h3 class="poster-title">{{ game.title }}</h3>
+
+              <label class="control-label" [for]="'status-' + game.id">Estado</label>
+              <select
+                [id]="'status-' + game.id"
+                class="app-control"
+                [ngModel]="game.status"
+                (ngModelChange)="updateStatus(game, $event)"
+                [disabled]="updatingGame === game.id"
+              >
+                <option value="pending">Pendiente</option>
+                <option value="playing">Jugando</option>
+                <option value="completed">Completado</option>
+                <option value="abandoned">Abandonado</option>
+              </select>
+
+              @if (game.platform || game.rating) {
+                <div class="game-extras">
+                  @if (game.platform) {
+                    <span>{{ game.platform }}</span>
+                  }
+                  @if (game.rating) {
+                    <span>★ {{ game.rating }}/10</span>
+                  }
+                </div>
+              }
+
+              <div class="card-actions">
+                <button
+                  type="button"
+                  class="action-secondary"
+                  (click)="toggleEditForm(game)"
+                  [disabled]="updatingGame === game.id"
+                >
+                  {{ editingGame === game.id ? 'Cancelar' : 'Editar info' }}
+                </button>
+                <button
+                  type="button"
+                  class="action-danger"
+                  (click)="confirmDelete(game)"
+                  [disabled]="updatingGame === game.id"
+                >
+                  Eliminar
+                </button>
+              </div>
+
+              @if (editingGame === game.id) {
+                <div class="edit-form">
+                  <div>
+                    <label class="control-label" [for]="'platform-' + game.id">Plataforma</label>
+                    <input
+                      [id]="'platform-' + game.id"
+                      class="app-control"
+                      type="text"
+                      [(ngModel)]="editForm.platform"
+                      placeholder="PC, PS5..."
+                    />
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <label class="control-label" [for]="'start-' + game.id">Inicio</label>
+                      <input
+                        [id]="'start-' + game.id"
+                        class="app-control"
+                        type="date"
+                        [(ngModel)]="editForm.startDate"
+                      />
+                    </div>
+                    <div class="col-6">
+                      <label class="control-label" [for]="'end-' + game.id">Término</label>
+                      <input
+                        [id]="'end-' + game.id"
+                        class="app-control"
+                        type="date"
+                        [(ngModel)]="editForm.endDate"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="control-label" [for]="'note-' + game.id">Nota personal</label>
+                    <textarea
+                      [id]="'note-' + game.id"
+                      class="app-control"
+                      [(ngModel)]="editForm.personalNote"
+                      rows="3"
+                      placeholder="¿Qué te pareció?"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label class="control-label" [for]="'rating-' + game.id"
+                      >Valoración (1–10)</label
+                    >
+                    <input
+                      [id]="'rating-' + game.id"
+                      class="app-control"
+                      type="number"
+                      [(ngModel)]="editForm.rating"
+                      min="1"
+                      max="10"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    class="action-primary"
+                    (click)="savePersonalInfo(game)"
+                    [disabled]="updatingGame === game.id"
+                  >
+                    Guardar cambios
+                  </button>
+                </div>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+  }
+</div>

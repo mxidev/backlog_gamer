@@ -1,0 +1,157 @@
+.library-page {
+  padding-bottom: 2rem;
+}
+
+.title-accent {
+  color: var(--accent);
+}
+
+.library-count {
+  flex: none;
+  padding: 0.55rem 0.85rem;
+  border-radius: 9px;
+  background: #ab8cff2b;
+  color: #dacaff;
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.filters {
+  padding: 1.2rem;
+}
+
+.clear-button {
+  width: 100%;
+  min-height: 46px;
+}
+
+.empty-symbol {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+  font-size: 2.5rem;
+}
+
+.games-section {
+  margin-top: 2.5rem;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.3rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  span {
+    color: var(--muted);
+    font-size: 0.83rem;
+  }
+}
+
+.poster-media {
+  position: relative;
+}
+
+.status-badge {
+  position: absolute;
+  bottom: 0.7rem;
+  left: 0.7rem;
+  padding: 0.28rem 0.6rem;
+  border: 1px solid #ffffff35;
+  border-radius: 7px;
+  background: #29334d;
+  color: #e8ecf9;
+  font-size: 0.7rem;
+  font-weight: 700;
+  box-shadow: 0 3px 14px #0008;
+}
+
+.status-playing {
+  background: #59459c;
+}
+
+.status-completed {
+  background: #285f50;
+}
+
+.status-abandoned {
+  background: #704854;
+}
+
+.poster-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.poster-title {
+  min-height: 2.8em;
+  margin: 0.25rem 0 0.7rem;
+}
+
+.poster-body .app-control {
+  min-height: 40px;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.85rem;
+}
+
+.game-extras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+
+  span {
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    background: #ab8cff25;
+    color: #d5c5ff;
+    font-size: 0.75rem;
+  }
+}
+
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+
+  button {
+    min-height: 38px;
+    padding: 0.35rem;
+    font-size: 0.76rem;
+  }
+}
+
+.edit-form {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+
+  .action-primary {
+    width: 100%;
+    font-size: 0.82rem;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+@media (max-width: 600px) {
+  .library-count {
+    align-self: start;
+  }
+
+  .filters {
+    padding: 1rem;
+  }
+}
