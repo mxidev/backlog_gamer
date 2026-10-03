@@ -5,15 +5,13 @@
 
 ## Última actualización
 
-2026-10-01
+2026-10-03
 
 ## Estado general
 
 MVP en progreso. Sprint 0 completado. HUs de autenticación, catálogo y biblioteca completadas (AUTH-001, CAT-001, LIB-001 a LIB-006). Fix de JWT secret aplicado.
 
-## Trabajo visual en curso
-
-- Rama local `chore/web-visual-refresh` desde `develop`: rediseño responsivo de acceso, inicio, catálogo y biblioteca con retícula de Bootstrap y paleta propia. Pendiente de revisión visual y de integración; no cambia el estado de las HUs.
+Rediseño visual responsivo de acceso, inicio, catálogo y biblioteca integrado en `develop` (PR #12). Fix de detección de cambios aplicado para que los estados de carga se actualicen inmediatamente tras responder los servicios.
 
 ## Trabajo actual
 
@@ -41,6 +39,9 @@ Estado: Done (2026-09-29)
 ### CAT-001 — Buscar videojuegos en un catálogo
 Estado: Done (2026-09-30)
 
+### CAT-002 — Ver información básica de un videojuego
+Estado: Backlog
+
 ### LIB-001 — Agregar un videojuego a mi biblioteca
 Estado: Done (2026-09-30)
 
@@ -59,10 +60,17 @@ Estado: Done (2026-09-30)
 ### LIB-006 — Buscar, filtrar y ordenar mi biblioteca
 Estado: Done (2026-10-01)
 
+### DASH-001 — Ver un resumen de mi backlog
+Estado: Backlog
+
+### UX-001 — Recibir estados claros de carga, vacío y error
+Estado: Backlog
+
 ## Próximo trabajo recomendado
 
-1. Implementar DASH-001 (ver un resumen de mi backlog).
-2. Considerar agregar lint al web (actualmente solo tiene formato con Prettier).
+1. Implementar DASH-001 (el home ya tiene una base de resumen, falta ajustar a criterios).
+2. UX-001 (el rediseño ya cubre varios estados, falta formalizar).
+3. CAT-002 (vista de detalle de juego).
 
 ## Flujo de desarrollo acordado
 
@@ -100,4 +108,4 @@ Ninguno registrado.
 
 ## Próximo punto de entrada
 
-Implementar DASH-001 (ver un resumen de mi backlog) o UX-001 (recibir estados claros de carga, vacío y error).
+Elegir entre DASH-001, UX-001 o CAT-002 para continuar el MVP.
